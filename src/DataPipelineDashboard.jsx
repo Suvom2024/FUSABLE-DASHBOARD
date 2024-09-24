@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { motion, AnimatePresence , useAnimation } from 'framer-motion';
 import { Tabs, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -19,6 +19,8 @@ import { ChevronDown } from 'lucide-react';
 import { Sparkles } from 'lucide-react';
 import { CheckIcon, MinusIcon } from 'lucide-react';
 import { AlertTriangle, TrendingUp, List } from 'lucide-react';
+import { Activity, RefreshCw } from 'lucide-react';
+import { FaCog } from 'react-icons/fa';
 
 
 
@@ -238,33 +240,83 @@ const KPICard = ({ icon, title, value, description, trend, trendValue }) => {
 
 const DataPipelineHeader = () => {
   return (
-    <div className="bg-gradient-to-r from-teal-700 to-teal-900 text-white p-8 rounded-lg shadow-lg">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-4xl font-extrabold tracking-tight">Data Pipeline Dashboard</h1>
-        <div className="flex space-x-4">
-          <button className="border border-white text-white px-4 py-2 rounded-md">
-            <FaSyncAlt className="inline-block mr-2" /> Refresh Data
-          </button>
-          <button className="border border-white text-white px-4 py-2 rounded-md">
-            <FaDownload className="inline-block mr-2" /> Export Report
-          </button>
-        </div>
+    <motion.div 
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="bg-gradient-to-br from-teal-600 via-teal-700 to-teal-900 text-white p-8 rounded-2xl shadow-2xl overflow-hidden relative"
+    >
+      <div className="absolute inset-0 bg-teal-500 opacity-10">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <defs>
+            <pattern id="pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+              <circle cx="20" cy="20" r="1.5" fill="#fff" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#pattern)" />
+        </svg>
       </div>
-      <p className="text-xl text-gray-100 mb-8">
-        A comprehensive overview of your data processing pipeline.
-      </p>
-      <div className="bg-white/10 backdrop-blur-lg border-teal-400 p-6 rounded-lg">
-        <div className="flex items-center space-x-4">
-          <FaDatabase className="text-gray-100 h-12 w-12" />
-          <div>
-            <h2 className="text-2xl font-bold text-gray-100">The Data Journey</h2>
-            <p className="text-gray-100">Follow your data from ingestion to insights.</p>
+      
+      <div className="relative z-10">
+        <div className="flex justify-between items-center mb-8">
+          <motion.h1 
+            initial={{ x: -50 }}
+            animate={{ x: 0 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 120 }}
+            className="text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-teal-200"
+          >
+            Data Pipeline Dashboard
+          </motion.h1>
+          <div className="flex space-x-4">
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-white/10 backdrop-blur-md border border-teal-300 text-white px-4 py-2 rounded-md flex items-center transition-all duration-300 hover:bg-white/20"
+            >
+              <FaSyncAlt className="inline-block mr-2" /> Refresh Data
+            </motion.button>
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-white/10 backdrop-blur-md border border-teal-300 text-white px-4 py-2 rounded-md flex items-center transition-all duration-300 hover:bg-white/20"
+            >
+              <FaDownload className="inline-block mr-2" /> Export Report
+            </motion.button>
           </div>
         </div>
+        
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="text-2xl text-teal-100 mb-10 font-light"
+        >
+          Unveiling the power of your data processing journey.
+        </motion.p>
+        
+        <motion.div 
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6, type: 'spring', stiffness: 100 }}
+          className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-teal-400/30 p-8 rounded-xl shadow-inner"
+        >
+          <div className="flex items-center space-x-6">
+            <div className="flex space-x-4">
+              <FaDatabase className="text-teal-200 h-12 w-12" />
+              <FaChartLine className="text-teal-200 h-12 w-12" />
+              <FaCog className="text-teal-200 h-12 w-12 animate-spin-slow" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold text-white mb-2">The Data Odyssey</h2>
+              <p className="text-teal-100 text-lg">Embark on a journey from raw data to actionable insights.</p>
+            </div>
+          </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
+
 
 
 const DateRangeSelect = ({ handleDateRangeChange }) => {
@@ -348,12 +400,12 @@ const TabItem = ({ icon: Icon, label, isActive, onClick }) => (
 const DataPipelineTabs = ({ activeTab, setActiveTab }) => {
   const tabs = [
     { label: 'Overview', icon: FaChartBar },
-    { label: 'Data Ingestion', icon: FaCloudUploadAlt },
-    { label: 'Data Cleaning', icon: FaFilter },
-    { label: 'Deduplication', icon: FaCopy },
-    { label: 'Data Mastering', icon: FaClipboardCheck },
-    { label: 'Performance', icon: FaChartLine },
-    { label: 'Errors', icon: FaExclamationTriangle },
+    // { label: 'Data Ingestion', icon: FaCloudUploadAlt },
+    // { label: 'Data Cleaning', icon: FaFilter },
+    // { label: 'Deduplication', icon: FaCopy },
+    // { label: 'Data Mastering', icon: FaClipboardCheck },
+    // { label: 'Performance', icon: FaChartLine },
+    // { label: 'Errors', icon: FaExclamationTriangle },
   ];
 
   return (
@@ -373,6 +425,77 @@ const DataPipelineTabs = ({ activeTab, setActiveTab }) => {
   );
 };
 
+const Footer = () => {
+  return (
+    <footer className="p-3 mt-10">
+      <div className="bg-teal-600 rounded-full p-2 flex items-center justify-between shadow-lg border-4 border-teal-800">
+        <div className="flex items-center space-x-3 ml-4">
+          <div className="bg-white p-2 rounded-full">
+            <Activity className="h-5 w-5 text-teal-600" />
+          </div>
+          <span className="font-bold text-white text-sm">Data Pipeline Dashboard
+          </span>
+        </div>
+        
+        <div className="flex items-center space-x-2 bg-teal-700 py-1 px-3 rounded-full">
+          <RefreshCw className="h-4 w-4 text-teal-200 animate-spin" />
+          <span className="text-xs text-teal-100">Updated: {new Date().toLocaleTimeString()}</span>
+        </div>
+        
+        <div className="text-xs text-teal-100 mr-4">
+          © 2024 Data Pipeline Dashboard
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+const MovingDots = () => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = 50;
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2 + 1,
+        speedX: Math.random() * 0.5 - 0.25,
+        speedY: Math.random() * 0.5 - 0.25
+      });
+    }
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(particle => {
+        particle.x += particle.speedX;
+        particle.y += particle.speedY;
+
+        if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
+        if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
+
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(20, 184, 166, 0.5)'; // Teal color with transparency
+        ctx.fill();
+      });
+    };
+
+    animate();
+
+    return () => cancelAnimationFrame(animate);
+  }, []);
+  return <canvas ref={canvasRef} className="absolute inset-0 z-0" />;
+};
 // Main Dashboard component
 export default function Component() {
   const [activeTab, setActiveTab] = useState(0);
@@ -382,13 +505,14 @@ export default function Component() {
 
   return (
     <div className="p-8 bg-gradient-to-br from-teal-50 to-teal-100 min-h-screen">
+       <MovingDots />
       <DataPipelineHeader/>
       
       {/* Date Range Selector */}
       <DateRangeSelect/>
       
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
         <KPICard
           icon={<FaDatabase />}
           title="Total Records Processed"
@@ -527,7 +651,44 @@ export default function Component() {
           trendValue="5%"
           color="red"
         />
-      </div>
+      </div> */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+      <KPICard
+        icon={<FaDatabase />}
+        title="Total Records Processed"
+        value="1,234,567"
+        description="Across all pipeline stages"
+        trend="up"
+        trendValue="5.2%"
+      />
+      <KPICard
+        icon={<FaCopy />}
+        title="Duplicates Removed"
+        value="12,345"
+        description="Total duplicates identified and removed"
+        trend="down"
+        trendValue="2.1%"
+        color="blue"
+      />
+      <KPICard
+        icon={<FaMagic />}
+        title="Mastered Records"
+        value="987,654"
+        description="Total number of mastered records created"
+        trend="up"
+        trendValue="3.7%"
+        color="purple"
+      />
+      <KPICard
+        icon={<FaExclamationTriangle />}
+        title="Total Errors"
+        value="1,234"
+        description="Errors encountered across all stages"
+        trend="down"
+        trendValue="0.8%"
+        color="red"
+      />
+    </div>
 
 
       {/* Tabs for different sections */}
@@ -544,7 +705,7 @@ export default function Component() {
             <TabPanel>
               <OverviewTab dateRange={dateRange} />
             </TabPanel>
-            <TabPanel>
+            {/* <TabPanel>
               <DataIngestionTab dateRange={dateRange} />
             </TabPanel>
             <TabPanel>
@@ -561,10 +722,11 @@ export default function Component() {
             </TabPanel>
             <TabPanel>
               <ErrorsTab dateRange={dateRange} />
-            </TabPanel>
+            </TabPanel> */}
           </motion.div>
         </AnimatePresence>
       </Tabs>
+      <Footer/>
     </div>
   );
 }
@@ -692,18 +854,185 @@ const Progress = ({ value, className, indicatorClassName }) => (
     ></div>
   </div>
 );
+// const OverviewTab = ({ dateRange }) => (
+//   <motion.div
+//     initial={{ opacity: 0 }}
+//     animate={{ opacity: 1 }}
+//     transition={{ duration: 0.5 }}
+//     className="grid grid-cols-1 md:grid-cols-3 gap-8"
+//   >
+//     {/* Pipeline Processing Status */}
+//     <PipelineProcessingStatus />
+
+//     {/* Summary Statistics */}
+//     <Card className="bg-gradient-to-br from-teal-50 to-teal-100 border border-teal-200 overflow-hidden">
+//       <div className="p-6 relative">
+//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Summary Statistics</h2>
+//         <div className="space-y-4 relative z-10">
+//           {[
+//             { label: "Total Records Ingested", value: "1,500,000" },
+//             { label: "Records After Cleaning", value: "1,450,000" },
+//             { label: "Duplicates Removed", value: "50,000" },
+//             { label: "Mastered Records Created", value: "1,400,000" },
+//             { label: "Total Errors Encountered", value: "5,000", error: true }
+//           ].map((item, index) => (
+//             <div key={index} className="flex justify-between items-center p-2 rounded-lg bg-white bg-opacity-60 backdrop-blur-sm transition-all duration-300 hover:bg-opacity-80 hover:shadow-md">
+//               <span className="text-teal-700">{item.label}</span>
+//               <span className={`font-semibold ${item.error ? 'text-red-600' : 'text-teal-600'}`}>{item.value}</span>
+//             </div>
+//           ))}
+//         </div>
+//         <div className="absolute top-0 right-0 w-64 h-64 bg-teal-300 rounded-full filter blur-3xl opacity-20 -z-10"></div>
+//         <div className="absolute bottom-0 left-0 w-48 h-48 bg-teal-400 rounded-full filter blur-3xl opacity-20 -z-10"></div>
+//       </div>
+//     </Card>
+
+//     {/* Processing Time by Stage */}
+//     <Card className="border border-teal-200">
+//       <div className="p-6">
+//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Processing Time by Stage</h2>
+//         <ResponsiveContainer width="100%" height={300}>
+//           <BarChart data={dummyDataProcessingTime}>
+//             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+//             <XAxis dataKey="stage" tick={{ fill: '#4a5568', fontWeight: '500' }} />
+//             <YAxis tick={{ fill: '#4a5568', fontWeight: '500' }} />
+//             <Tooltip content={<CustomTooltip />} />
+//             <Legend />
+//             <Bar dataKey="time" name="Current Time" fill="#38b2ac" />
+//           </BarChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </Card>
+
+//     {/* Data Quality Improvement */}
+//     <Card className="border border-teal-200">
+//       <div className="p-6">
+//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Data Quality Improvement</h2>
+//         <ResponsiveContainer width="100%" height={300}>
+//           <RadarChart outerRadius={90} data={dummyDataQualityImprovement}>
+//             <PolarGrid stroke="#CBD5E0" />
+//             <PolarAngleAxis dataKey="attribute" tick={{ fill: '#4a5568', fontWeight: '500' }} />
+//             <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fill: '#4a5568', fontWeight: '500' }} />
+//             <Radar name="Before" dataKey="before" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+//             <Radar name="After" dataKey="after" stroke="#4fd1c5" fill="#4fd1c5" fillOpacity={0.6} />
+//             <Legend />
+//             <Tooltip content={<CustomTooltip />} />
+//           </RadarChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </Card>
+
+//     {/* Overall Pipeline Performance */}
+//     <Card className="border border-teal-200">
+//       <div className="p-6">
+//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Overall Pipeline Performance</h2>
+//         <ResponsiveContainer width="100%" height={300}>
+//           <ComposedChart data={dummyDataMasteredRecords}>
+//             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+//             <XAxis dataKey="date" tickFormatter={(value) => new Date(value).toLocaleDateString()} tick={{ fill: '#4a5568', fontWeight: '500' }} />
+//             <YAxis yAxisId="left" orientation="left" stroke="#38b2ac" tick={{ fill: '#4a5568', fontWeight: '500' }} />
+//             <YAxis yAxisId="right" orientation="right" stroke="#4fd1c5" tick={{ fill: '#4a5568', fontWeight: '500' }} />
+//             <Tooltip content={<CustomTooltip />} />
+//             <Legend />
+//             <Bar yAxisId="left" dataKey="records" name="Mastered Records" fill="#38b2ac" />
+//             <Line yAxisId="right" type="monotone" dataKey="confidence" name="Confidence (%)" stroke="#4fd1c5" />
+//             <Area yAxisId="right" type="monotone" dataKey="completeness" name="Completeness (%)" fill="#81e6d9" stroke="#4fd1c5" />
+//           </ComposedChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </Card>
+
+//     {/* Records Growth Over Time */}
+//     <Card className="border border-teal-200">
+//       <div className="p-6">
+//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Records Growth Over Time</h2>
+//         <ResponsiveContainer width="100%" height={300}>
+//           <BarChart data={dummyDataNewPlot}>
+//             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+//             <XAxis dataKey="name" tick={{ fill: '#4a5568', fontWeight: '500' }} />
+//             <YAxis tick={{ fill: '#4a5568', fontWeight: '500' }} />
+//             <Tooltip content={<CustomTooltip />} />
+//             <Legend />
+//             <Bar dataKey="value" name="Records" fill="#38b2ac" />
+//           </BarChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </Card>
+// <Card className="border border-teal-200">
+//       <div className="p-6">
+//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Pipeline Stage Distribution</h2>
+//         <ResponsiveContainer width="100%" height={300}>
+//           <PieChart>
+//             <Pie
+//               data={dummyDataPieChart}
+//               cx="50%"
+//               cy="50%"
+//               innerRadius={60}
+//               outerRadius={100}
+//               fill="#8884d8"
+//               paddingAngle={5}
+//               dataKey="value"
+//             >
+//               {dummyDataPieChart.map((entry, index) => (
+//                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+//               ))}
+//             </Pie>
+//             <Tooltip content={<CustomTooltip />} />
+//             <Legend />
+//           </PieChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </Card>
+
+//     {/* Data Quality vs. Record Count */}
+//     <Card className="border border-teal-200">
+//       <div className="p-6">
+//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Data Quality vs. Record Count</h2>
+//         <ResponsiveContainer width="100%" height={300}>
+//           <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+//             <CartesianGrid />
+//             <XAxis type="number" dataKey="x" name="Record Count" unit="k" />
+//             <YAxis type="number" dataKey="y" name="Quality Score" unit="" />
+//             <ZAxis type="number" dataKey="x" range={[60, 400]} name="Processing Time" unit="s" />
+//             <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
+//             <Scatter name="Data Quality" data={dummyDataScatterPlot} fill="#38b2ac" />
+//           </ScatterChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </Card>
+
+//     {/* Monthly Growth Trend */}
+//     <Card className="border border-teal-200">
+//       <div className="p-6">
+//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Monthly Growth Trend</h2>
+//         <ResponsiveContainer width="100%" height={300}>
+//           <LineChart data={dummyDataLineChart} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+//             <CartesianGrid strokeDasharray="3 3" />
+//             <XAxis dataKey="month" />
+//             <YAxis />
+//             <Tooltip content={<CustomTooltip />} />
+//             <Legend />
+//             <Line type="monotone" dataKey="growth" stroke="#38b2ac" strokeWidth={2} />
+//           </LineChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </Card>
+//   </motion.div>
+  
+// );
+
 const OverviewTab = ({ dateRange }) => (
   <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 0.5 }}
-    className="grid grid-cols-1 md:grid-cols-3 gap-8"
+    className="grid grid-cols-1 md:grid-cols-2 gap-8"
   >
     {/* Pipeline Processing Status */}
     <PipelineProcessingStatus />
 
     {/* Summary Statistics */}
-    <Card className="bg-gradient-to-br from-teal-50 to-teal-100 border border-teal-200 overflow-hidden">
+    <Card className="bg-gradient-to-br from-teal-50 to-teal-100 border border-teal-200 overflow-hidden ring-1 ring-teal-300">
       <div className="p-6 relative">
         <h2 className="text-2xl font-bold text-teal-800 mb-4">Summary Statistics</h2>
         <div className="space-y-4 relative z-10">
@@ -726,7 +1055,7 @@ const OverviewTab = ({ dateRange }) => (
     </Card>
 
     {/* Processing Time by Stage */}
-    <Card className="border border-teal-200">
+    <Card className="border border-teal-200 ring-1 ring-teal-300">
       <div className="p-6">
         <h2 className="text-2xl font-bold text-teal-800 mb-4">Processing Time by Stage</h2>
         <ResponsiveContainer width="100%" height={300}>
@@ -737,67 +1066,13 @@ const OverviewTab = ({ dateRange }) => (
             <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Bar dataKey="time" name="Current Time" fill="#38b2ac" />
-            <Bar dataKey="optimizedTime" name="Optimized Time" fill="#4fd1c5" />
           </BarChart>
         </ResponsiveContainer>
       </div>
     </Card>
 
-    {/* Data Quality Improvement */}
-    <Card className="border border-teal-200">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-teal-800 mb-4">Data Quality Improvement</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <RadarChart outerRadius={90} data={dummyDataQualityImprovement}>
-            <PolarGrid stroke="#CBD5E0" />
-            <PolarAngleAxis dataKey="attribute" tick={{ fill: '#4a5568', fontWeight: '500' }} />
-            <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fill: '#4a5568', fontWeight: '500' }} />
-            <Radar name="Before" dataKey="before" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
-            <Radar name="After" dataKey="after" stroke="#4fd1c5" fill="#4fd1c5" fillOpacity={0.6} />
-            <Legend />
-            <Tooltip content={<CustomTooltip />} />
-          </RadarChart>
-        </ResponsiveContainer>
-      </div>
-    </Card>
-
-    {/* Overall Pipeline Performance */}
-    <Card className="border border-teal-200">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-teal-800 mb-4">Overall Pipeline Performance</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <ComposedChart data={dummyDataMasteredRecords}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-            <XAxis dataKey="date" tickFormatter={(value) => new Date(value).toLocaleDateString()} tick={{ fill: '#4a5568', fontWeight: '500' }} />
-            <YAxis yAxisId="left" orientation="left" stroke="#38b2ac" tick={{ fill: '#4a5568', fontWeight: '500' }} />
-            <YAxis yAxisId="right" orientation="right" stroke="#4fd1c5" tick={{ fill: '#4a5568', fontWeight: '500' }} />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <Bar yAxisId="left" dataKey="records" name="Mastered Records" fill="#38b2ac" />
-            <Line yAxisId="right" type="monotone" dataKey="confidence" name="Confidence (%)" stroke="#4fd1c5" />
-            <Area yAxisId="right" type="monotone" dataKey="completeness" name="Completeness (%)" fill="#81e6d9" stroke="#4fd1c5" />
-          </ComposedChart>
-        </ResponsiveContainer>
-      </div>
-    </Card>
-
-    {/* Records Growth Over Time */}
-    <Card className="border border-teal-200">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-teal-800 mb-4">Records Growth Over Time</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={dummyDataNewPlot}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-            <XAxis dataKey="name" tick={{ fill: '#4a5568', fontWeight: '500' }} />
-            <YAxis tick={{ fill: '#4a5568', fontWeight: '500' }} />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <Bar dataKey="value" name="Records" fill="#38b2ac" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </Card>
-<Card className="border border-teal-200">
+    {/* Pipeline Stage Distribution */}
+    <Card className="border border-teal-200 ring-1 ring-teal-300">
       <div className="p-6">
         <h2 className="text-2xl font-bold text-teal-800 mb-4">Pipeline Stage Distribution</h2>
         <ResponsiveContainer width="100%" height={300}>
@@ -823,41 +1098,171 @@ const OverviewTab = ({ dateRange }) => (
       </div>
     </Card>
 
-    {/* Data Quality vs. Record Count */}
-    <Card className="border border-teal-200">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-teal-800 mb-4">Data Quality vs. Record Count</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-            <CartesianGrid />
-            <XAxis type="number" dataKey="x" name="Record Count" unit="k" />
-            <YAxis type="number" dataKey="y" name="Quality Score" unit="" />
-            <ZAxis type="number" dataKey="x" range={[60, 400]} name="Processing Time" unit="s" />
-            <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
-            <Scatter name="Data Quality" data={dummyDataScatterPlot} fill="#38b2ac" />
-          </ScatterChart>
-        </ResponsiveContainer>
-      </div>
-    </Card>
+    {/* Records and File Size Distribution */}
+    <div className="bg-white p-6 rounded-lg shadow-md border border-teal-200 ring-1 ring-teal-300">
+      <h2 className="text-2xl font-semibold text-teal-800 mb-4">Records and File Size Distribution</h2>
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={dummyDataIngestion}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
+          <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Bar yAxisId="left" dataKey="records" name="Records" fill="#00796B" />
+          <Bar yAxisId="right" dataKey="size" name="File Size (KB)" fill="#FFC107" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
 
-    {/* Monthly Growth Trend */}
-    <Card className="border border-teal-200">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-teal-800 mb-4">Monthly Growth Trend</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={dummyDataLineChart} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <Line type="monotone" dataKey="growth" stroke="#38b2ac" strokeWidth={2} />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-    </Card>
+    {/* Data Source Distribution */}
+    <div className="bg-white p-6 rounded-lg shadow-md border border-teal-200 ring-1 ring-teal-300">
+      <h2 className="text-2xl font-semibold text-teal-800 mb-4">Data Source Distribution</h2>
+      <ResponsiveContainer width="100%" height={300}>
+        <PieChart>
+          <Pie
+            data={dummyDataSourceDistribution}
+            cx="50%"
+            cy="50%"
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="value"
+            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+          >
+            {dummyDataSourceDistribution.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
+
+    {/* Records Before and After Cleaning */}
+    <ChartCard title="Records Before and After Cleaning" className="ring-1 ring-teal-300">
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={dummyDataCleaning}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
+          <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Bar yAxisId="left" dataKey="records" name="Records" fill="#00796B" />
+          <Bar yAxisId="right" dataKey="dataQuality" name="Data Quality (%)" fill="#FFC107" />
+        </BarChart>
+      </ResponsiveContainer>
+    </ChartCard>
+
+    {/* Data Quality Issues Found */}
+    <ChartCard title="Data Quality Issues Found" className="ring-1 ring-teal-300">
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={dummyDataQualityIssues} layout="vertical">
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="number" />
+          <YAxis dataKey="name" type="category" width={150} />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Bar dataKey="count" name="Issue Count" fill="#00796B">
+            {dummyDataQualityIssues.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </ChartCard>
+
+    {/* Attribute Completion Rate */}
+    <div className="bg-white p-4 rounded-lg shadow-md border border-teal-200 ring-1 ring-teal-300">
+      <h2 className="text-xl font-semibold text-teal-800 mb-4">Attribute Completion Rate</h2>
+      <ResponsiveContainer width="100%" height={250}>
+        <BarChart data={dummyDataAttributeCompletion}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Bar dataKey="before" name="Before Mastering" fill="#26A69A" />
+          <Bar dataKey="after" name="After Mastering" fill="#00796B" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+
+    {/* Number of Duplicates Found */}
+    <ChartCard title="Number of Duplicates Found" className="ring-1 ring-teal-300">
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={dummyDataDuplicates}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="source" />
+          <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
+          <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Bar yAxisId="left" dataKey="duplicates" name="Duplicates" fill="#00796B" />
+          <Bar yAxisId="right" dataKey="percentage" name="Percentage (%)" fill="#FFC107" />
+        </BarChart>
+      </ResponsiveContainer>
+    </ChartCard>
+
+    {/* Records Before and After Deduplication */}
+    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300">
+      <h2 className="text-3xl font-semibold text-teal-800 mb-6">Records Before and After Deduplication</h2>
+      <ResponsiveContainer width="100%" height={400}>
+        <BarChart data={dummyDataDeduplication}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Bar dataKey="records" name="Total Records" fill="#00796B" />
+          <Bar dataKey="uniqueRecords" name="Unique Records" fill="#4DB6AC" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+
+    {/* Error Counts by Type */}
+    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-red-300 ring-1 ring-teal-300">
+      <h2 className="text-3xl font-semibold text-red-800 mb-6">Error Counts by Type</h2>
+      <ResponsiveContainer width="100%" height={400}>
+        <BarChart data={dummyDataErrorCounts}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#FED7D7" />
+          <XAxis dataKey="type" stroke="#9B2C2C" />
+          <YAxis stroke="#9B2C2C" />
+          <Tooltip contentStyle={{ backgroundColor: '#FFF5F5', border: '1px solid #FC8181' }} />
+          <Legend />
+          <Bar dataKey="count" name="Error Count" fill="#FC8181" radius={[8, 8, 0, 0]}>
+            {dummyDataErrorCounts.map((entry, index) => (
+              <motion.rect
+                key={`bar-${index}`}
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
+              />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+
+    {/* Error Trends Over Time */}
+    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-red-300 ring-1 ring-teal-300 col-span-2">
+      <h2 className="text-3xl font-semibold text-red-800 mb-6">Error Trends Over Time</h2>
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart data={dummyDataErrorTrends}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#FED7D7" />
+          <XAxis dataKey="date" stroke="#9B2C2C" tickFormatter={(value) => formatDate(value)} />
+          <YAxis stroke="#9B2C2C" />
+          <Tooltip contentStyle={{ backgroundColor: '#FFF5F5', border: '1px solid #FC8181' }} />
+          <Legend />
+          <Line type="monotone" dataKey="errors" name="Errors" stroke="#FC8181" strokeWidth={3} dot={{ fill: '#FC8181', strokeWidth: 2 }} />
+          <Line type="monotone" dataKey="resolved" name="Resolved" stroke="#68D391" strokeWidth={3} dot={{ fill: '#68D391', strokeWidth: 2 }} />
+          <Line type="monotone" dataKey="openIssues" name="Open Issues" stroke="#F6AD55" strokeWidth={3} dot={{ fill: '#F6AD55', strokeWidth: 2 }} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+
   </motion.div>
-  
 );
 
 const dummyDataQuality = [
@@ -1220,12 +1625,13 @@ const dummyDataTimeEfficiency = [
 ];
 
 
-const ChartCard = ({ title, children }) => (
-  <div className="bg-white p-4 rounded-lg shadow-md">
-    <h3 className="text-lg font-semibold mb-4">{title}</h3>
+const ChartCard = ({ title, children, className = '' }) => (
+  <div className={`bg-white p-6 rounded-lg shadow-md border border-teal-200 ${className}`}>
+    <h2 className="text-2xl font-semibold text-teal-800 mb-4">{title}</h2>
     {children}
   </div>
-);// DeduplicationTab Component
+);
+
 const DeduplicationTab = ({ dateRange }) => (
   <div className="grid grid-cols-3 gap-4">
     <ChartCard title="Number of Duplicates Found">
