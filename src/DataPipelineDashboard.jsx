@@ -1053,49 +1053,7 @@ const OverviewTab = ({ dateRange }) => (
       </div>
     </Card>
 
-    {/* Processing Time by Stage */}
-    <Card className="border border-teal-200 ring-1 ring-teal-300">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-teal-800 mb-4">Processing Time by Stage</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={dummyDataProcessingTime}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-            <XAxis dataKey="stage" tick={{ fill: '#4a5568', fontWeight: '500' }} />
-            <YAxis tick={{ fill: '#4a5568', fontWeight: '500' }} />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <Bar dataKey="time" name="Current Time" fill="#38b2ac" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </Card>
-
-    {/* Pipeline Stage Distribution */}
-    <Card className="border border-teal-200 ring-1 ring-teal-300">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-teal-800 mb-4">Pipeline Stage Distribution</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={dummyDataPieChart}
-              cx="50%"
-              cy="50%"
-              innerRadius={60}
-              outerRadius={100}
-              fill="#8884d8"
-              paddingAngle={5}
-              dataKey="value"
-            >
-              {dummyDataPieChart.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-    </Card>
+   
 
     {/* Records and File Size Distribution */}
     <div className="bg-white p-6 rounded-lg shadow-md border border-teal-200 ring-1 ring-teal-300">
@@ -1172,37 +1130,24 @@ const OverviewTab = ({ dateRange }) => (
       </ResponsiveContainer>
     </ChartCard>
 
-    {/* Attribute Completion Rate */}
-    <div className="bg-white p-4 rounded-lg shadow-md border border-teal-200 ring-1 ring-teal-300">
-      <h2 className="text-xl font-semibold text-teal-800 mb-4">Attribute Completion Rate</h2>
-      <ResponsiveContainer width="100%" height={250}>
-        <BarChart data={dummyDataAttributeCompletion}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-          <Bar dataKey="before" name="Before Mastering" fill="#26A69A" />
-          <Bar dataKey="after" name="After Mastering" fill="#00796B" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
 
     {/* Number of Duplicates Found */}
-    <ChartCard title="Number of Duplicates Found" className="ring-1 ring-teal-300">
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={dummyDataDuplicates}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="source" />
-          <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
-          <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-          <Bar yAxisId="left" dataKey="duplicates" name="Duplicates" fill="#00796B" />
-          <Bar yAxisId="right" dataKey="percentage" name="Percentage (%)" fill="#FFC107" />
-        </BarChart>
-      </ResponsiveContainer>
-    </ChartCard>
+    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300">
+  <h2 className="text-3xl font-semibold text-teal-800 mb-6">Number of Duplicates Found</h2>
+  <ResponsiveContainer width="100%" height={400}>
+    <BarChart data={dummyDataDuplicates}>
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="source" />
+      <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
+      <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
+      <Tooltip content={<CustomTooltip />} />
+      <Legend />
+      <Bar yAxisId="left" dataKey="duplicates" name="Duplicates" fill="#00796B" />
+      <Bar yAxisId="right" dataKey="percentage" name="Percentage (%)" fill="#FFC107" />
+    </BarChart>
+  </ResponsiveContainer>
+</div>
+
 
     {/* Records Before and After Deduplication */}
     <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300">
@@ -1219,10 +1164,52 @@ const OverviewTab = ({ dateRange }) => (
         </BarChart>
       </ResponsiveContainer>
     </div>
+ {/* Processing Time by Stage */}
+ <Card className="border border-teal-200 ring-1 ring-teal-300">
+      <div className="p-6">
+        <h2 className="text-2xl font-bold text-teal-800 mb-4">Processing Time by Stage</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={dummyDataProcessingTime}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+            <XAxis dataKey="stage" tick={{ fill: '#4a5568', fontWeight: '500' }} />
+            <YAxis tick={{ fill: '#4a5568', fontWeight: '500' }} />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend />
+            <Bar dataKey="time" name="Current Time" fill="#38b2ac" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </Card>
 
+    {/* Pipeline Stage Distribution */}
+    <Card className="border border-teal-200 ring-1 ring-teal-300">
+      <div className="p-6">
+        <h2 className="text-2xl font-bold text-teal-800 mb-4">Pipeline Stage Distribution</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie
+              data={dummyDataPieChart}
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={100}
+              fill="#8884d8"
+              paddingAngle={5}
+              dataKey="value"
+            >
+              {dummyDataPieChart.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip content={<CustomTooltip />} />
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    </Card>
     {/* Error Counts by Type */}
-    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-red-300 ring-1 ring-teal-300">
-      <h2 className="text-3xl font-semibold text-red-800 mb-6">Error Counts by Type</h2>
+    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-red-300 ring-1 ring-teal-300 col-span-2">
+      <h2 className="text-3xl font-semibold text-red-800 mb-6">Error Trends Over Time</h2>
       <ResponsiveContainer width="100%" height={400}>
         <BarChart data={dummyDataErrorCounts}>
           <CartesianGrid strokeDasharray="3 3" stroke="#FED7D7" />
@@ -1241,23 +1228,6 @@ const OverviewTab = ({ dateRange }) => (
             ))}
           </Bar>
         </BarChart>
-      </ResponsiveContainer>
-    </div>
-
-    {/* Error Trends Over Time */}
-    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-red-300 ring-1 ring-teal-300 col-span-2">
-      <h2 className="text-3xl font-semibold text-red-800 mb-6">Error Trends Over Time</h2>
-      <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={dummyDataErrorTrends}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#FED7D7" />
-          <XAxis dataKey="date" stroke="#9B2C2C" tickFormatter={(value) => formatDate(value)} />
-          <YAxis stroke="#9B2C2C" />
-          <Tooltip contentStyle={{ backgroundColor: '#FFF5F5', border: '1px solid #FC8181' }} />
-          <Legend />
-          <Line type="monotone" dataKey="errors" name="Errors" stroke="#FC8181" strokeWidth={3} dot={{ fill: '#FC8181', strokeWidth: 2 }} />
-          <Line type="monotone" dataKey="resolved" name="Resolved" stroke="#68D391" strokeWidth={3} dot={{ fill: '#68D391', strokeWidth: 2 }} />
-          <Line type="monotone" dataKey="openIssues" name="Open Issues" stroke="#F6AD55" strokeWidth={3} dot={{ fill: '#F6AD55', strokeWidth: 2 }} />
-        </LineChart>
       </ResponsiveContainer>
     </div>
 
