@@ -505,7 +505,6 @@ export default function Component() {
 
   return (
     <div className="p-8 bg-gradient-to-br from-teal-50 to-teal-100 min-h-screen">
-       <MovingDots />
       <DataPipelineHeader/>
       
       {/* Date Range Selector */}
