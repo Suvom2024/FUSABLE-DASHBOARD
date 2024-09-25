@@ -1,9 +1,9 @@
-import React, { useState, useEffect,useRef } from 'react';
-import { motion, AnimatePresence , useAnimation } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { Tabs, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {
-  BarChart, Bar, XAxis, YAxis,ZAxis,CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  BarChart, Bar, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   LineChart, Line, PieChart, Pie, Cell, AreaChart, Area, ScatterChart, Scatter,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
   ComposedChart,
@@ -14,7 +14,7 @@ import {
   FaNetworkWired, FaCogs, FaServer, FaCloudUploadAlt,
   FaChartBar
 } from 'react-icons/fa';
-import { format} from 'date-fns';
+import { format } from 'date-fns';
 import { ChevronDown } from 'lucide-react';
 import { Sparkles } from 'lucide-react';
 import { CheckIcon, MinusIcon } from 'lucide-react';
@@ -240,61 +240,71 @@ const KPICard = ({ icon, title, value, description, trend, trendValue }) => {
 
 const DataPipelineHeader = () => {
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: -50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      className="bg-gradient-to-br from-teal-600 via-teal-700 to-teal-900 text-white p-8 rounded-2xl shadow-2xl overflow-hidden relative"
-    >
-      <div className="absolute inset-0 bg-teal-500 opacity-10">
-        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-          <defs>
-            <pattern id="pattern" width="40" height="40" patternUnits="userSpaceOnUse">
-              <circle cx="20" cy="20" r="1.5" fill="#fff" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#pattern)" />
-        </svg>
-      </div>
-      
-      <div className="relative z-10">
-        <div className="flex justify-between items-center mb-8">
-          <motion.h1 
+    // <motion.div
+    //   initial={{ opacity: 0, y: -50 }}
+    //   animate={{ opacity: 1, y: 0 }}
+    //   transition={{ duration: 0.8 }}
+    //   className="bg-gradient-to-br from-teal-600 via-teal-700 to-teal-900 text-white p-8 rounded-2xl shadow-2xl overflow-hidden relative"
+    // >
+    //   <div className="absolute inset-0 bg-teal-500 opacity-10">
+    //     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+    //       <defs>
+    //         <pattern id="pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+    //           <circle cx="20" cy="20" r="1.5" fill="#fff" />
+    //         </pattern>
+    //       </defs>
+    //       <rect width="100%" height="100%" fill="url(#pattern)" />
+    //     </svg>
+    //   </div>
+
+    <div className="relative z-10">
+      <div className="flex justify-between items-center mb-8">
+
+        <div className="flex items-center space-x-4">
+          <img
+            src="/favicon.ico"  // This points to the logo in the public folder
+            alt="Logo"
+            className="h-20 w-auto"  // Adjust the height to be slightly smaller
+          />
+        </div>
+
+
+        {/* <motion.h1 
             initial={{ x: -50 }}
             animate={{ x: 0 }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 120 }}
             className="text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-teal-200"
           >
             Data Pipeline Dashboard
-          </motion.h1>
-          <div className="flex space-x-4">
-            <motion.button 
+          </motion.h1> */}
+        {/* <div className="flex space-x-4">
+            <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-white/10 backdrop-blur-md border border-teal-300 text-white px-4 py-2 rounded-md flex items-center transition-all duration-300 hover:bg-white/20"
             >
               <FaSyncAlt className="inline-block mr-2" /> Refresh Data
             </motion.button>
-            <motion.button 
+            <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-white/10 backdrop-blur-md border border-teal-300 text-white px-4 py-2 rounded-md flex items-center transition-all duration-300 hover:bg-white/20"
             >
               <FaDownload className="inline-block mr-2" /> Export Report
             </motion.button>
-          </div>
-        </div>
-        
-        <motion.p 
+          </div> */}
+      </div>
+
+      {/* <motion.p 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
           className="text-2xl text-teal-100 mb-10 font-light"
         >
           Unveiling the power of your data processing journey.
-        </motion.p>
-        
-        <motion.div 
+        </motion.p> */}
+
+      {/* <motion.div 
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6, type: 'spring', stiffness: 100 }}
@@ -311,9 +321,9 @@ const DataPipelineHeader = () => {
               <p className="text-teal-100 text-lg">Embark on a journey from raw data to actionable insights.</p>
             </div>
           </div>
-        </motion.div>
-      </div>
-    </motion.div>
+        </motion.div> */}
+    </div>
+    // </motion.div>
   );
 };
 
@@ -375,9 +385,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 const TabItem = ({ icon: Icon, label, isActive, onClick }) => (
   <button
     onClick={onClick}
-    className={`relative px-4 py-2 rounded-lg transition-all duration-300 ease-in-out ${
-      isActive ? 'text-teal-900' : 'text-teal-700 hover:text-teal-900'
-    }`}
+    className={`relative px-4 py-2 rounded-lg transition-all duration-300 ease-in-out ${isActive ? 'text-teal-900' : 'text-teal-700 hover:text-teal-900'
+      }`}
   >
     <div className="flex items-center space-x-2">
       <Icon size={20} />
@@ -436,12 +445,12 @@ const Footer = () => {
           <span className="font-bold text-white text-sm">Data Pipeline Dashboard
           </span>
         </div>
-        
+
         <div className="flex items-center space-x-2 bg-teal-700 py-1 px-3 rounded-full">
           <RefreshCw className="h-4 w-4 text-teal-200 animate-spin" />
           <span className="text-xs text-teal-100">Updated: {new Date().toLocaleTimeString()}</span>
         </div>
-        
+
         <div className="text-xs text-teal-100 mr-4">
           © 2024 Data Pipeline Dashboard
         </div>
@@ -505,11 +514,11 @@ export default function Component() {
 
   return (
     <div className="p-8 bg-gradient-to-br from-teal-50 to-teal-100 min-h-screen">
-      <DataPipelineHeader/>
-      
+      <DataPipelineHeader />
+
       {/* Date Range Selector */}
-      <DateRangeSelect/>
-      
+      <DateRangeSelect />
+
       {/* KPI Cards */}
       {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
         <KPICard
@@ -652,47 +661,47 @@ export default function Component() {
         />
       </div> */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-      <KPICard
-        icon={<FaDatabase />}
-        title="Total Records Processed"
-        value="1,234,567"
-        description="Across all pipeline stages"
-        trend="up"
-        trendValue="5.2%"
-      />
-      <KPICard
-        icon={<FaCopy />}
-        title="Duplicates Removed"
-        value="12,345"
-        description="Total duplicates identified and removed"
-        trend="down"
-        trendValue="2.1%"
-        color="blue"
-      />
-      <KPICard
-        icon={<FaMagic />}
-        title="Mastered Records"
-        value="987,654"
-        description="Total number of mastered records created"
-        trend="up"
-        trendValue="3.7%"
-        color="purple"
-      />
-      <KPICard
-        icon={<FaExclamationTriangle />}
-        title="Total Errors"
-        value="1,234"
-        description="Errors encountered across all stages"
-        trend="down"
-        trendValue="0.8%"
-        color="red"
-      />
-    </div>
+        <KPICard
+          icon={<FaDatabase />}
+          title="Total Records Processed"
+          value="1,234,567"
+          description="Across all pipeline stages"
+          trend="up"
+          trendValue="5.2%"
+        />
+        <KPICard
+          icon={<FaCopy />}
+          title="Duplicates Removed"
+          value="12,345"
+          description="Total duplicates identified and removed"
+          trend="down"
+          trendValue="2.1%"
+          color="blue"
+        />
+        <KPICard
+          icon={<FaMagic />}
+          title="Mastered Records"
+          value="987,654"
+          description="Total number of mastered records created"
+          trend="up"
+          trendValue="3.7%"
+          color="purple"
+        />
+        <KPICard
+          icon={<FaExclamationTriangle />}
+          title="Total Errors"
+          value="1,234"
+          description="Errors encountered across all stages"
+          trend="down"
+          trendValue="0.8%"
+          color="red"
+        />
+      </div>
 
 
       {/* Tabs for different sections */}
       <Tabs selectedIndex={activeTab} onSelect={index => setActiveTab(index)}>
-      <DataPipelineTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        <DataPipelineTabs activeTab={activeTab} setActiveTab={setActiveTab} />
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -725,7 +734,7 @@ export default function Component() {
           </motion.div>
         </AnimatePresence>
       </Tabs>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
@@ -821,17 +830,15 @@ const PipelineProcessingStatus = () => {
                 className="flex items-center p-2 rounded-lg bg-white bg-opacity-60 backdrop-blur-sm"
               >
                 <span
-                  className={`text-2xl font-bold mr-2 ${
-                    stage.completed ? 'text-teal-600' : 'text-gray-400'
-                  }`}
+                  className={`text-2xl font-bold mr-2 ${stage.completed ? 'text-teal-600' : 'text-gray-400'
+                    }`}
                 >
                   {stage.completed ? <CheckIcon /> : <MinusIcon />}
                 </span>
                 <span className="text-teal-800 flex-1">{stage.name}</span>
                 <span
-                  className={`text-sm font-medium ${
-                    stage.completed ? 'text-teal-600' : 'text-gray-500'
-                  }`}
+                  className={`text-sm font-medium ${stage.completed ? 'text-teal-600' : 'text-gray-500'
+                    }`}
                 >
                   {stage.completed ? 'Completed' : 'Remaining'}
                 </span>
@@ -1017,7 +1024,7 @@ const Progress = ({ value, className, indicatorClassName }) => (
 //       </div>
 //     </Card>
 //   </motion.div>
-  
+
 // );
 
 const OverviewTab = ({ dateRange }) => (
@@ -1053,7 +1060,7 @@ const OverviewTab = ({ dateRange }) => (
       </div>
     </Card>
 
-   
+
 
     {/* Records and File Size Distribution */}
     <div className="bg-white p-6 rounded-lg shadow-md border border-teal-200 ring-1 ring-teal-300">
@@ -1133,20 +1140,20 @@ const OverviewTab = ({ dateRange }) => (
 
     {/* Number of Duplicates Found */}
     <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300">
-  <h2 className="text-3xl font-semibold text-teal-800 mb-6">Number of Duplicates Found</h2>
-  <ResponsiveContainer width="100%" height={400}>
-    <BarChart data={dummyDataDuplicates}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="source" />
-      <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
-      <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
-      <Tooltip content={<CustomTooltip />} />
-      <Legend />
-      <Bar yAxisId="left" dataKey="duplicates" name="Duplicates" fill="#00796B" />
-      <Bar yAxisId="right" dataKey="percentage" name="Percentage (%)" fill="#FFC107" />
-    </BarChart>
-  </ResponsiveContainer>
-</div>
+      <h2 className="text-3xl font-semibold text-teal-800 mb-6">Number of Duplicates Found</h2>
+      <ResponsiveContainer width="100%" height={400}>
+        <BarChart data={dummyDataDuplicates}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="source" />
+          <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
+          <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Bar yAxisId="left" dataKey="duplicates" name="Duplicates" fill="#00796B" />
+          <Bar yAxisId="right" dataKey="percentage" name="Percentage (%)" fill="#FFC107" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
 
 
     {/* Records Before and After Deduplication */}
@@ -1164,8 +1171,8 @@ const OverviewTab = ({ dateRange }) => (
         </BarChart>
       </ResponsiveContainer>
     </div>
- {/* Processing Time by Stage */}
- <Card className="border border-teal-200 ring-1 ring-teal-300">
+    {/* Processing Time by Stage */}
+    <Card className="border border-teal-200 ring-1 ring-teal-300">
       <div className="p-6">
         <h2 className="text-2xl font-bold text-teal-800 mb-4">Processing Time by Stage</h2>
         <ResponsiveContainer width="100%" height={300}>
@@ -1993,20 +2000,20 @@ const PerformanceTab = ({ dateRange }) => (
     </div>
 
     <div className="bg-white p-4 rounded-lg shadow-md border border-teal-200">
-    <h2 className="text-xl font-semibold text-teal-800 mb-2">Queue Length and Processing Speed</h2>
-    <ResponsiveContainer width="100%" height={250}>
-      <LineChart data={queueLengthData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="time" />
-        <YAxis yAxisId="left" />
-        <YAxis yAxisId="right" orientation="right" />
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-        <Line yAxisId="left" type="monotone" dataKey="queueLength" name="Queue Length" stroke="#8884d8" activeDot={{ r: 8 }} />
-        <Line yAxisId="right" type="monotone" dataKey="processingSpeed" name="Processing Speed" stroke="#82ca9d" />
-      </LineChart>
-    </ResponsiveContainer>
-  </div>
+      <h2 className="text-xl font-semibold text-teal-800 mb-2">Queue Length and Processing Speed</h2>
+      <ResponsiveContainer width="100%" height={250}>
+        <LineChart data={queueLengthData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="time" />
+          <YAxis yAxisId="left" />
+          <YAxis yAxisId="right" orientation="right" />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Line yAxisId="left" type="monotone" dataKey="queueLength" name="Queue Length" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line yAxisId="right" type="monotone" dataKey="processingSpeed" name="Processing Speed" stroke="#82ca9d" />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
 
     <div className="bg-white p-4 rounded-lg shadow-md border border-teal-200">
       <h2 className="text-xl font-semibold text-teal-800 mb-2">Throughput vs Capacity</h2>
@@ -2042,20 +2049,20 @@ const PerformanceTab = ({ dateRange }) => (
     </div>
 
     <div className="bg-white p-4 rounded-lg shadow-md border border-teal-200">
-    <h2 className="text-xl font-semibold text-teal-800 mb-2">Performance Improvement Breakdown</h2>
-    <ResponsiveContainer width="100%" height={250}>
-      <BarChart data={performanceImprovementData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="month" />
-        <YAxis />
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-        <Bar dataKey="optimization" name="Optimization" stackId="a" fill="#8884d8" />
-        <Bar dataKey="bugFixes" name="Bug Fixes" stackId="a" fill="#82ca9d" />
-        <Bar dataKey="newFeatures" name="New Features" stackId="a" fill="#ffc658" />
-      </BarChart>
-    </ResponsiveContainer>
-  </div>
+      <h2 className="text-xl font-semibold text-teal-800 mb-2">Performance Improvement Breakdown</h2>
+      <ResponsiveContainer width="100%" height={250}>
+        <BarChart data={performanceImprovementData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Bar dataKey="optimization" name="Optimization" stackId="a" fill="#8884d8" />
+          <Bar dataKey="bugFixes" name="Bug Fixes" stackId="a" fill="#82ca9d" />
+          <Bar dataKey="newFeatures" name="New Features" stackId="a" fill="#ffc658" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
 
     <div className="bg-white p-4 rounded-lg shadow-md border border-teal-200">
       <h2 className="text-xl font-semibold text-teal-800 mb-2">Performance Metrics Breakdown</h2>
@@ -2102,9 +2109,8 @@ const ErrorsTab = ({ dateRange }) => {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={() => setActiveTab(id)}
-      className={`flex items-center space-x-2 px-4 py-2 rounded-full ${
-        activeTab === id ? 'bg-red-600 text-white' : 'bg-red-100 text-red-600'
-      } transition-all duration-300 ease-in-out`}
+      className={`flex items-center space-x-2 px-4 py-2 rounded-full ${activeTab === id ? 'bg-red-600 text-white' : 'bg-red-100 text-red-600'
+        } transition-all duration-300 ease-in-out`}
     >
       {icon}
       <span>{label}</span>
@@ -2114,7 +2120,7 @@ const ErrorsTab = ({ dateRange }) => {
   return (
     <div className="p-8 bg-gradient-to-br from-teal-50 to-teal-100 min-h-screen">
       <h1 className="text-4xl font-bold text-teal-700 mb-8 text-center">Error Analysis Dashboard</h1>
-      
+
       <div className="flex justify-center space-x-4 mb-8">
         <TabButton id="errorCounts" icon={<AlertTriangle size={20} />} label="Error Counts" />
         <TabButton id="errorTrends" icon={<TrendingUp size={20} />} label="Error Trends" />
@@ -2191,10 +2197,9 @@ const ErrorsTab = ({ dateRange }) => {
                       <td className="py-3 px-4">{record.errorMessage}</td>
                       <td className="py-3 px-4">{record.stage}</td>
                       <td className="py-3 px-4">{record.timestamp}</td>
-                      <td className={`py-3 px-4 font-semibold ${
-                        record.severity === 'High' ? 'text-red-600' :
+                      <td className={`py-3 px-4 font-semibold ${record.severity === 'High' ? 'text-red-600' :
                         record.severity === 'Medium' ? 'text-yellow-600' : 'text-green-600'
-                      }`}>
+                        }`}>
                         {record.severity}
                       </td>
                     </motion.tr>
