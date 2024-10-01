@@ -22,6 +22,11 @@ import { AlertTriangle, TrendingUp, List } from 'lucide-react';
 import { Activity, RefreshCw } from 'lucide-react';
 import Select from 'react-select';
 
+// Color constants
+const COLORS = ['#00796B', '#26A69A', '#4DB6AC', '#80CBC4', '#B2DFDB', '#E0F2F1'];
+const ACCENT_COLORS = ['#FFC107', '#FF9800', '#FF5722', '#F44336', '#E91E63', '#9C27B0'];
+
+// Utility functions
 const dummyData = {
   '15010647232': [
     { sourceName: 'RigDig', sourceRecordId: '11066098', name: 'Winey BICE Inc', address: '8246 w mineral king ave visalia ca 93291 us', secondaryName: '', secondaryAddress: '' },
@@ -33,8 +38,239 @@ const dummyData = {
     { sourceName: 'SourceB', sourceRecordId: 'B456', name: 'Company A Inc', address: '123 Main Street, City A, ST', secondaryName: '', secondaryAddress: '' },
     { sourceName: 'SourceC', sourceRecordId: 'C789', name: 'A Company', address: 'Main St, City A', secondaryName: '', secondaryAddress: '' },
   ],
-  // Add more dummy data for other Fusable IDs...
 };
+const dummyDataPieChart = [
+  { name: 'Category A', value: 400 },
+  { name: 'Category B', value: 300 },
+  { name: 'Category C', value: 200 },
+  { name: 'Category D', value: 100 },
+];
+
+const dummyDataQuality = [
+  { name: 'Completeness', score: 85 },
+  { name: 'Accuracy', score: 90 },
+  { name: 'Consistency', score: 88 },
+  { name: 'Timeliness', score: 92 },
+];
+
+const dummyDataProcessingTimes = [
+  { stage: 'Ingestion', time: 120 },
+  { stage: 'Cleaning', time: 180 },
+  { stage: 'Transformation', time: 150 },
+  { stage: 'Loading', time: 90 },
+];
+
+const dummyDataErrorRate = [
+  { date: '2023-06-01', rate: 2.5 },
+  { date: '2023-06-02', rate: 2.2 },
+  { date: '2023-06-03', rate: 2.8 },
+  { date: '2023-06-04', rate: 2.1 },
+  { date: '2023-06-05', rate: 1.9 },
+];
+
+const dummyDataSourceReliability = [
+  { source: 'Source A', reliability: 95 },
+  { source: 'Source B', reliability: 88 },
+  { source: 'Source C', reliability: 92 },
+  { source: 'Source D', reliability: 85 },
+];
+
+const dummyDataCostSavings = [
+  { month: 'Jan', savings: 5000 },
+  { month: 'Feb', savings: 6200 },
+  { month: 'Mar', savings: 7500 },
+  { month: 'Apr', savings: 8100 },
+  { month: 'May', savings: 9000 },
+];
+
+const dummyDataTimeEfficiency = [
+  { process: 'Data Cleaning', before: 100, after: 70 },
+  { process: 'Data Integration', before: 120, after: 90 },
+  { process: 'Data Validation', before: 80, after: 60 },
+  { process: 'Report Generation', before: 60, after: 40 },
+];
+
+const queueLengthData = [
+  { time: '00:00', length: 50 },
+  { time: '04:00', length: 30 },
+  { time: '08:00', length: 80 },
+  { time: '12:00', length: 100 },
+  { time: '16:00', length: 70 },
+  { time: '20:00', length: 40 },
+];
+
+const performanceImprovementData = [
+  { metric: 'Processing Speed', improvement: 30 },
+  { metric: 'Data Quality', improvement: 25 },
+  { metric: 'Error Rate', improvement: -40 },
+  { metric: 'Resource Utilization', improvement: 20 },
+];
+const dummyDataIngestion = [
+  { name: 'CustomerData.csv', records: 15000, size: 4500, processingTime: 180, errorRate: 0.02 },
+  { name: 'TransactionLog.json', records: 50000, size: 12000, processingTime: 420, errorRate: 0.01 },
+  { name: 'ProductCatalog.xml', records: 8000, size: 2800, processingTime: 150, errorRate: 0.03 },
+  { name: 'EmployeeRecords.xlsx', records: 5000, size: 1800, processingTime: 90, errorRate: 0.015 },
+  { name: 'SalesReport.csv', records: 30000, size: 7500, processingTime: 300, errorRate: 0.025 },
+  { name: 'InventoryUpdate.json', records: 20000, size: 5500, processingTime: 210, errorRate: 0.02 },
+  { name: 'CustomerFeedback.txt', records: 10000, size: 3000, processingTime: 120, errorRate: 0.04 },
+  { name: 'MarketingCampaign.csv', records: 12000, size: 3800, processingTime: 160, errorRate: 0.018 },
+];
+
+const dummyDataVolume = [
+  { date: '2023-06-01', volume: 120000, forecast: 125000, anomaly: false },
+  { date: '2023-06-02', volume: 118000, forecast: 122000, anomaly: false },
+  { date: '2023-06-03', volume: 95000, forecast: 120000, anomaly: true },
+  { date: '2023-06-04', volume: 130000, forecast: 128000, anomaly: false },
+  { date: '2023-06-05', volume: 122000, forecast: 126000, anomaly: false },
+  { date: '2023-06-06', volume: 128000, forecast: 130000, anomaly: false },
+  { date: '2023-06-07', volume: 140000, forecast: 132000, anomaly: true },
+];
+
+const dummyDataSourceDistribution = [
+  { name: 'CRM System', value: 35000, growth: 8, reliability: 98 },
+  { name: 'E-commerce Platform', value: 28000, growth: 12, reliability: 96 },
+  { name: 'Mobile App', value: 22000, growth: 15, reliability: 94 },
+  { name: 'Social Media API', value: 18000, growth: 10, reliability: 92 },
+  { name: 'IoT Devices', value: 12000, growth: 20, reliability: 90 },
+  { name: 'Legacy Database', value: 8000, growth: -5, reliability: 85 },
+];
+
+const dummyDataDuplicates = [
+  { source: 'CRM System', duplicates: 1500, percentage: 4.3, falsePositives: 75, detectionAccuracy: 98 },
+  { source: 'E-commerce Platform', duplicates: 840, percentage: 3, falsePositives: 42, detectionAccuracy: 99 },
+  { source: 'Mobile App', duplicates: 660, percentage: 3, falsePositives: 33, detectionAccuracy: 98 },
+  { source: 'Social Media API', duplicates: 540, percentage: 3, falsePositives: 27, detectionAccuracy: 97 },
+  { source: 'IoT Devices', duplicates: 360, percentage: 3, falsePositives: 18, detectionAccuracy: 96 },
+  { source: 'Legacy Database', duplicates: 400, percentage: 5, falsePositives: 20, detectionAccuracy: 95 },
+];
+
+const dummyDataDuplicateResolution = [
+  { name: 'Exact Match', value: 2100, efficiency: 99, processingTime: 0.2 },
+  { name: 'Fuzzy Match', value: 1050, efficiency: 92, processingTime: 0.8 },
+  { name: 'Manual Review', value: 150, efficiency: 99.9, processingTime: 10 },
+];
+
+const dummyDataDeduplication = [
+  { name: 'Customer Records', total: 50000, unique: 48500, duplicate: 1500 },
+  { name: 'Transaction Data', total: 100000, unique: 99200, duplicate: 800 },
+  { name: 'Product Catalog', total: 20000, unique: 19600, duplicate: 400 },
+  { name: 'Marketing Contacts', total: 30000, unique: 28800, duplicate: 1200 },
+];
+
+const dummyDataMasteredRecords = [
+  { date: '2023-06-01', records: 95000, confidence: 92, completeness: 95, accuracy: 94 },
+  { date: '2023-06-02', records: 97000, confidence: 93, completeness: 96, accuracy: 95 },
+  { date: '2023-06-03', records: 99000, confidence: 94, completeness: 97, accuracy: 96 },
+  { date: '2023-06-04', records: 101000, confidence: 95, completeness: 97, accuracy: 97 },
+  { date: '2023-06-05', records: 103000, confidence: 96, completeness: 98, accuracy: 97 },
+  { date: '2023-06-06', records: 105000, confidence: 97, completeness: 98, accuracy: 98 },
+  { date: '2023-06-07', records: 107000, confidence: 98, completeness: 99, accuracy: 98 },
+];
+
+const dummyDataAttributeCompletion = [
+  { name: 'Full Name', before: 95, after: 99.5, improvement: 4.5, criticality: 'High' },
+  { name: 'Email Address', before: 88, after: 98, improvement: 10, criticality: 'High' },
+  { name: 'Phone Number', before: 75, after: 95, improvement: 20, criticality: 'Medium' },
+  { name: 'Mailing Address', before: 70, after: 92, improvement: 22, criticality: 'Medium' },
+  { name: 'Date of Birth', before: 80, after: 94, improvement: 14, criticality: 'Low' },
+  { name: 'Customer ID', before: 100, after: 100, improvement: 0, criticality: 'Critical' },
+];
+
+const dummyDataQualityImprovement = [
+  { attribute: 'Completeness', before: 82, after: 97, impact: 'High' },
+  { attribute: 'Consistency', before: 75, after: 95, impact: 'Medium' },
+  { attribute: 'Accuracy', before: 88, after: 98, impact: 'High' },
+  { attribute: 'Timeliness', before: 90, after: 99, impact: 'Low' },
+  { attribute: 'Validity', before: 78, after: 96, impact: 'Medium' },
+  { attribute: 'Uniqueness', before: 92, after: 99.5, impact: 'High' },
+];
+
+const dummyDataProcessingTime = [
+  { stage: 'Data Ingestion', time: 300, optimizedTime: 240, bottleneck: 'I/O' },
+  { stage: 'Data Cleaning', time: 450, optimizedTime: 360, bottleneck: 'CPU' },
+  { stage: 'Deduplication', time: 180, optimizedTime: 150, bottleneck: 'Memory' },
+  { stage: 'Data Mastering', time: 360, optimizedTime: 300, bottleneck: 'CPU' },
+  { stage: 'Data Validation', time: 120, optimizedTime: 90, bottleneck: 'I/O' },
+];
+
+const dummyDataThroughput = [
+  { time: '00:00', throughput: 5000, capacity: 7500, queueLength: 500 },
+  { time: '04:00', throughput: 6000, capacity: 7500, queueLength: 250 },
+  { time: '08:00', throughput: 4000, capacity: 7500, queueLength: 1500 },
+  { time: '12:00', throughput: 7500, capacity: 7500, queueLength: 0 },
+  { time: '16:00', throughput: 6500, capacity: 7500, queueLength: 400 },
+  { time: '20:00', throughput: 5500, capacity: 7500, queueLength: 750 },
+];
+
+const dummyDataResourceUtilization = [
+  { time: '00:00', cpu: 60, memory: 70, io: 40, network: 50 },
+  { time: '04:00', cpu: 75, memory: 80, io: 55, network: 65 },
+  { time: '08:00', cpu: 70, memory: 75, io: 50, network: 60 },
+  { time: '12:00', cpu: 85, memory: 90, io: 70, network: 80 },
+  { time: '16:00', cpu: 80, memory: 85, io: 65, network: 75 },
+  { time: '20:00', cpu: 65, memory: 75, io: 45, network: 55 },
+];
+
+const dummyDataErrorCounts = [
+  { type: 'Data Format Errors', count: 250, impact: 'Medium', resolutionTime: 45 },
+  { type: 'Missing Required Fields', count: 180, impact: 'High', resolutionTime: 60 },
+  { type: 'Data Type Mismatches', count: 120, impact: 'Low', resolutionTime: 30 },
+  { type: 'Integration Failures', count: 50, impact: 'Critical', resolutionTime: 120 },
+  { type: 'Duplicate Records', count: 80, impact: 'Medium', resolutionTime: 40 },
+  { type: 'Timeout Errors', count: 30, impact: 'High', resolutionTime: 90 },
+];
+
+const dummyDataErrorTrends = [
+  { date: '2023-06-01', errors: 150, resolved: 135, openIssues: 15 },
+  { date: '2023-06-02', errors: 120, resolved: 110, openIssues: 25 },
+  { date: '2023-06-03', errors: 180, resolved: 160, openIssues: 45 },
+  { date: '2023-06-04', errors: 90, resolved: 85, openIssues: 50 },
+  { date: '2023-06-05', errors: 135, resolved: 120, openIssues: 65 },
+  { date: '2023-06-06', errors: 105, resolved: 95, openIssues: 75 },
+  { date: '2023-06-07', errors: 165, resolved: 140, openIssues: 100 },
+];
+
+const dummyDataFailedRecords = [
+  { id: 1, recordId: 'CUST0012345', errorMessage: 'Invalid email format', stage: 'Data Validation', timestamp: '2023-06-07 10:30:00', severity: 'High' },
+  { id: 2, recordId: 'PROD0067890', errorMessage: 'Missing required field: price', stage: 'Data Cleaning', timestamp: '2023-06-07 11:45:00', severity: 'Medium' },
+  { id: 3, recordId: 'TRX0098765', errorMessage: 'Duplicate transaction ID', stage: 'Deduplication', timestamp: '2023-06-07 13:15:00', severity: 'Low' },
+  { id: 4, recordId: 'ORD0054321', errorMessage: 'Inconsistent shipping address', stage: 'Data Mastering', timestamp: '2023-06-07 14:20:00', severity: 'High' },
+  { id: 5, recordId: 'EMP0023456', errorMessage: 'Invalid date format for hire date', stage: 'Data Validation', timestamp: '2023-06-07 16:10:00', severity: 'Medium' },
+  { id: 6, recordId: 'INV0087654', errorMessage: 'Integration timeout error', stage: 'Data Ingestion', timestamp: '2023-06-07 18:30:00', severity: 'High' },
+  { id: 7, recordId: 'LEAD0034567', errorMessage: 'Incorrect data type for phone number', stage: 'Data Cleaning', timestamp: '2023-06-08 09:05:00', severity: 'Low' },
+  { id: 8, recordId: 'SUPP0045678', errorMessage: 'Incomplete supplier information', stage: 'Data Mastering', timestamp: '2023-06-08 11:40:00', severity: 'Medium' },
+];
+
+const dummyDataCleaning = [
+  { name: 'Customer Dataset', records: 50000, dataQuality: 88 },
+  { name: 'Product Catalog', records: 20000, dataQuality: 92 },
+  { name: 'Sales Transactions', records: 100000, dataQuality: 85 },
+  { name: 'Employee Records', records: 5000, dataQuality: 90 },
+];
+
+const dummyDataQualityIssues = [
+  { name: 'Missing Values', count: 2500, impact: 8, severity: 'High', resolutionTime: 4.5 },
+  { name: 'Duplicate Records', count: 1200, impact: 6, severity: 'Medium', resolutionTime: 2.5 },
+  { name: 'Inconsistent Formats', count: 1800, impact: 7, severity: 'High', resolutionTime: 5 },
+  { name: 'Data Type Mismatches', count: 800, impact: 5, severity: 'Low', resolutionTime: 1.5 },
+  { name: 'Out-of-Range Values', count: 1500, impact: 7, severity: 'Medium', resolutionTime: 3 },
+];
+
+const dummyDataErrorRates = [
+  { date: '2023-06-01', rate: 3.2, threshold: 2, criticalErrors: 18, warningErrors: 42 },
+  { date: '2023-06-02', rate: 2.8, threshold: 2, criticalErrors: 15, warningErrors: 38 },
+  { date: '2023-06-03', rate: 2.5, threshold: 2, criticalErrors: 12, warningErrors: 35 },
+  { date: '2023-06-04', rate: 2.2, threshold: 2, criticalErrors: 10, warningErrors: 32 },
+  { date: '2023-06-05', rate: 1.9, threshold: 2, criticalErrors: 8, warningErrors: 28 },
+];
+
+const dummyDataCleaningMethods = [
+  { name: 'Manual Review', efficiency: 85, timeSpent: 40 },
+  { name: 'Automated Scripts', efficiency: 92, timeSpent: 25 },
+  { name: 'Machine Learning', efficiency: 88, timeSpent: 35 },
+  { name: 'Data Validation Rules', efficiency: 95, timeSpent: 20 },
+  { name: 'Third-party Tools', efficiency: 90, timeSpent: 30 },
+];
 
 const FusableRecordsMerger = () => {
   const [selectedFusableId, setSelectedFusableId] = useState(null);
@@ -131,152 +367,6 @@ const FusableRecordsMerger = () => {
     </motion.div>
   );
 };
-
-
-
-const dummyDataIngestion = [
-  { name: 'File A', records: 1200, size: 450, processingTime: 30, errorRate: 0.5 },
-  { name: 'File B', records: 800, size: 300, processingTime: 20, errorRate: 0.3 },
-  { name: 'File C', records: 1500, size: 600, processingTime: 40, errorRate: 0.7 },
-  { name: 'File D', records: 1000, size: 400, processingTime: 25, errorRate: 0.4 },
-  { name: 'File E', records: 2000, size: 800, processingTime: 50, errorRate: 0.6 },
-  { name: 'File F', records: 1800, size: 700, processingTime: 45, errorRate: 0.5 },
-  { name: 'File G', records: 2200, size: 850, processingTime: 55, errorRate: 0.8 },
-  { name: 'File H', records: 1600, size: 550, processingTime: 35, errorRate: 0.4 },
-];
-
-const dummyDataVolume = [
-  { date: '2023-01-01', volume: 5000, forecast: 5200, anomaly: false },
-  { date: '2023-01-02', volume: 5500, forecast: 5400, anomaly: false },
-  { date: '2023-01-03', volume: 4800, forecast: 5100, anomaly: true },
-  { date: '2023-01-04', volume: 6000, forecast: 5800, anomaly: false },
-  { date: '2023-01-05', volume: 5200, forecast: 5300, anomaly: false },
-  { date: '2023-01-06', volume: 5800, forecast: 5600, anomaly: false },
-  { date: '2023-01-07', volume: 6200, forecast: 5900, anomaly: true },
-];
-
-const dummyDataSourceDistribution = [
-  { name: 'Source A', value: 400, growth: 5, reliability: 95 },
-  { name: 'Source B', value: 300, growth: -2, reliability: 88 },
-  { name: 'Source C', value: 300, growth: 8, reliability: 92 },
-  { name: 'Source D', value: 200, growth: 3, reliability: 90 },
-  { name: 'Source E', value: 250, growth: 1, reliability: 93 },
-  { name: 'Source F', value: 180, growth: -1, reliability: 87 },
-];
-
-const dummyDataDuplicates = [
-  { source: 'Source A', duplicates: 50, percentage: 5, falsePositives: 2, detectionAccuracy: 98 },
-  { source: 'Source B', duplicates: 30, percentage: 3, falsePositives: 1, detectionAccuracy: 99 },
-  { source: 'Source C', duplicates: 40, percentage: 4, falsePositives: 3, detectionAccuracy: 97 },
-  { source: 'Source D', duplicates: 20, percentage: 2, falsePositives: 1, detectionAccuracy: 99 },
-  { source: 'Source E', duplicates: 35, percentage: 3.5, falsePositives: 2, detectionAccuracy: 98 },
-  { source: 'Source F', duplicates: 25, percentage: 2.5, falsePositives: 1, detectionAccuracy: 99 },
-];
-
-const dummyDataDuplicateResolution = [
-  { name: 'Exact Match', value: 60, efficiency: 95, processingTime: 0.5 },
-  { name: 'Fuzzy Match', value: 30, efficiency: 85, processingTime: 1.2 },
-  { name: 'Manual Review', value: 10, efficiency: 99, processingTime: 5 },
-];
-
-const dummyDataDeduplication = [
-  { name: 'Dataset A', total: 1000, unique: 800, duplicate: 200 },
-  { name: 'Dataset B', total: 1500, unique: 1200, duplicate: 300 },
-  { name: 'Dataset C', total: 800, unique: 600, duplicate: 200 },
-  { name: 'Dataset D', total: 2000, unique: 1600, duplicate: 400 },
-];
-
-
-const dummyDataMasteredRecords = [
-  { date: '2023-01-01', records: 8000, confidence: 85, completeness: 90, accuracy: 88 },
-  { date: '2023-01-02', records: 8500, confidence: 87, completeness: 92, accuracy: 90 },
-  { date: '2023-01-03', records: 9000, confidence: 90, completeness: 94, accuracy: 93 },
-  { date: '2023-01-04', records: 9200, confidence: 92, completeness: 95, accuracy: 94 },
-  { date: '2023-01-05', records: 9500, confidence: 94, completeness: 97, accuracy: 96 },
-  { date: '2023-01-06', records: 9800, confidence: 95, completeness: 98, accuracy: 97 },
-  { date: '2023-01-07', records: 10000, confidence: 96, completeness: 99, accuracy: 98 },
-];
-
-const dummyDataAttributeCompletion = [
-  { name: 'Name', before: 95, after: 100, improvement: 5, criticality: 'High' },
-  { name: 'Email', before: 80, after: 95, improvement: 15, criticality: 'High' },
-  { name: 'Phone', before: 70, after: 90, improvement: 20, criticality: 'Medium' },
-  { name: 'Address', before: 60, after: 85, improvement: 25, criticality: 'Medium' },
-  { name: 'Date of Birth', before: 75, after: 92, improvement: 17, criticality: 'Low' },
-  { name: 'Customer ID', before: 100, after: 100, improvement: 0, criticality: 'Critical' },
-];
-
-const dummyDataQualityImprovement = [
-  { attribute: 'Completeness', before: 70, after: 95, impact: 'High' },
-  { attribute: 'Consistency', before: 60, after: 90, impact: 'Medium' },
-  { attribute: 'Accuracy', before: 75, after: 95, impact: 'High' },
-  { attribute: 'Timeliness', before: 80, after: 100, impact: 'Low' },
-  { attribute: 'Validity', before: 65, after: 92, impact: 'Medium' },
-  { attribute: 'Uniqueness', before: 85, after: 98, impact: 'High' },
-];
-
-const dummyDataProcessingTime = [
-  { stage: 'Ingestion', time: 120, optimizedTime: 90, bottleneck: 'I/O' },
-  { stage: 'Cleaning', time: 180, optimizedTime: 150, bottleneck: 'CPU' },
-  { stage: 'Deduplication', time: 90, optimizedTime: 75, bottleneck: 'Memory' },
-  { stage: 'Mastering', time: 150, optimizedTime: 120, bottleneck: 'CPU' },
-  { stage: 'Validation', time: 60, optimizedTime: 45, bottleneck: 'I/O' },
-];
-
-const dummyDataThroughput = [
-  { time: '00:00', throughput: 100, capacity: 150, queueLength: 10 },
-  { time: '04:00', throughput: 120, capacity: 150, queueLength: 5 },
-  { time: '08:00', throughput: 80, capacity: 150, queueLength: 30 },
-  { time: '12:00', throughput: 150, capacity: 150, queueLength: 0 },
-  { time: '16:00', throughput: 130, capacity: 150, queueLength: 8 },
-  { time: '20:00', throughput: 110, capacity: 150, queueLength: 15 },
-];
-
-const dummyDataResourceUtilization = [
-  { time: '00:00', cpu: 50, memory: 60, io: 30, network: 40 },
-  { time: '04:00', cpu: 70, memory: 65, io: 40, network: 55 },
-  { time: '08:00', cpu: 60, memory: 70, io: 35, network: 50 },
-  { time: '12:00', cpu: 80, memory: 75, io: 50, network: 70 },
-  { time: '16:00', cpu: 75, memory: 80, io: 45, network: 65 },
-  { time: '20:00', cpu: 65, memory: 70, io: 40, network: 60 },
-];
-
-const dummyDataErrorCounts = [
-  { type: 'Ingestion Errors', count: 50, impact: 'Medium', resolutionTime: 30 },
-  { type: 'Processing Errors', count: 30, impact: 'High', resolutionTime: 60 },
-  { type: 'Validation Errors', count: 20, impact: 'Low', resolutionTime: 15 },
-  { type: 'System Errors', count: 10, impact: 'Critical', resolutionTime: 120 },
-  { type: 'Data Format Errors', count: 15, impact: 'Medium', resolutionTime: 45 },
-  { type: 'Timeout Errors', count: 5, impact: 'High', resolutionTime: 90 },];
-
-const dummyDataErrorTrends = [
-  { date: '2023-01-01', errors: 25, resolved: 20, openIssues: 5 },
-  { date: '2023-01-02', errors: 20, resolved: 18, openIssues: 7 },
-  { date: '2023-01-03', errors: 30, resolved: 25, openIssues: 12 },
-  { date: '2023-01-04', errors: 15, resolved: 15, openIssues: 12 },
-  { date: '2023-01-05', errors: 22, resolved: 20, openIssues: 14 },
-  { date: '2023-01-06', errors: 18, resolved: 16, openIssues: 16 },
-  { date: '2023-01-07', errors: 28, resolved: 24, openIssues: 20 },
-];
-
-const dummyDataFailedRecords = [
-  { id: 1, recordId: 'REC001', errorMessage: 'Invalid format', stage: 'Ingestion', timestamp: '2023-01-01 10:30:00', severity: 'High' },
-  { id: 2, recordId: 'REC002', errorMessage: 'Missing required field', stage: 'Cleaning', timestamp: '2023-01-01 11:45:00', severity: 'Medium' },
-  { id: 3, recordId: 'REC003', errorMessage: 'Duplicate entry', stage: 'Deduplication', timestamp: '2023-01-02 09:15:00', severity: 'Low' },
-  { id: 4, recordId: 'REC004', errorMessage: 'Data inconsistency', stage: 'Mastering', timestamp: '2023-01-02 14:20:00', severity: 'High' },
-  { id: 5, recordId: 'REC005', errorMessage: 'Validation failed', stage: 'Processing', timestamp: '2023-01-03 16:10:00', severity: 'Medium' },
-  { id: 6, recordId: 'REC006', errorMessage: 'Timeout error', stage: 'Ingestion', timestamp: '2023-01-03 18:30:00', severity: 'High' },
-  { id: 7, recordId: 'REC007', errorMessage: 'Data type mismatch', stage: 'Cleaning', timestamp: '2023-01-04 11:05:00', severity: 'Low' },
-  { id: 8, recordId: 'REC008', errorMessage: 'Incomplete record', stage: 'Mastering', timestamp: '2023-01-04 13:40:00', severity: 'Medium' },
-];
-
-// Color constants
-const COLORS = ['#00796B', '#26A69A', '#4DB6AC', '#80CBC4', '#B2DFDB', '#E0F2F1'];
-const ACCENT_COLORS = ['#FFC107', '#FF9800', '#FF5722', '#F44336', '#E91E63', '#9C27B0'];
-
-// Utility functions
-
-
 const formatDate = (dateString) => {
   return format(new Date(dateString), 'MMM dd, yyyy');
 };
@@ -851,47 +941,6 @@ export default function Component() {
     </div>
   );
 }
-const dummyDataNewPlot = [
-  { name: 'Jan', value: 100000 },
-  { name: 'Feb', value: 150000 },
-  { name: 'Mar', value: 200000 },
-  { name: 'Apr', value: 250000 },
-  { name: 'May', value: 300000 },
-  { name: 'Jun', value: 350000 },
-  { name: 'Jul', value: 400000 },
-  { name: 'Aug', value: 450000 },
-  { name: 'Sep', value: 500000 },
-];
-const dummyDataPieChart = [
-  { name: 'Ingestion', value: 40 },
-  { name: 'Validation', value: 25 },
-  { name: 'Cleaning', value: 20 },
-  { name: 'Deduplication', value: 10 },
-  { name: 'Mastering', value: 5 },
-];
-
-const dummyDataScatterPlot = [
-  { x: 100, y: 0.8 },
-  { x: 200, y: 0.6 },
-  { x: 300, y: 0.9 },
-  { x: 400, y: 0.7 },
-  { x: 500, y: 0.85 },
-  { x: 600, y: 0.65 },
-  { x: 700, y: 0.95 },
-];
-
-const dummyDataLineChart = [
-  { month: 'Jan', growth: 10 },
-  { month: 'Feb', growth: 15 },
-  { month: 'Mar', growth: 20 },
-  { month: 'Apr', growth: 25 },
-  { month: 'May', growth: 30 },
-  { month: 'Jun', growth: 35 },
-  { month: 'Jul', growth: 40 },
-  { month: 'Aug', growth: 45 },
-  { month: 'Sep', growth: 50 },
-];
-
 // Overview Tab
 const Card = ({ children, className }) => (
   <div className={`bg-white rounded-xl shadow-lg ${className}`}>
@@ -1358,29 +1407,6 @@ const OverviewTab = ({ dateRange }) => (
   </motion.div>
 );
 
-const dummyDataQuality = [
-  { date: '2023-01-01', completeness: 95, accuracy: 98, consistency: 92 },
-  { date: '2023-02-01', completeness: 97, accuracy: 99, consistency: 95 },
-  { date: '2023-03-01', completeness: 94, accuracy: 97, consistency: 93 },
-  { date: '2023-04-01', completeness: 98, accuracy: 99, consistency: 96 },
-  { date: '2023-05-01', completeness: 96, accuracy: 98, consistency: 94 },
-];
-
-const dummyDataProcessingTimes = [
-  { name: 'ETL', time: 30 },
-  { name: 'Validation', time: 15 },
-  { name: 'Indexing', time: 20 },
-  { name: 'Aggregation', time: 25 },
-];
-
-const dummyDataErrorRate = [
-  { date: '2023-01-01', rate: 2.5 },
-  { date: '2023-02-01', rate: 2.2 },
-  { date: '2023-03-01', rate: 1.8 },
-  { date: '2023-04-01', rate: 1.5 },
-  { date: '2023-05-01', rate: 1.2 },
-];
-
 // Data Ingestion Tab
 const DataIngestionTab = ({ dateRange }) => (
   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -1520,51 +1546,6 @@ const DataIngestionTab = ({ dateRange }) => (
     </div>
   </div>
 );
-const dummyDataCleaning = [
-  { name: 'Dataset A', records: 1000, dataQuality: 75 },
-  { name: 'Dataset B', records: 1500, dataQuality: 82 },
-  { name: 'Dataset C', records: 800, dataQuality: 68 },
-  { name: 'Dataset D', records: 1200, dataQuality: 79 },
-];
-
-const dummyDataQualityIssues = [
-  { name: 'Missing Values', count: 150, impact: 8, severity: 'High', resolutionTime: 2.5 },
-  { name: 'Duplicate Records', count: 80, impact: 6, severity: 'Medium', resolutionTime: 1.5 },
-  { name: 'Inconsistent Formats', count: 120, impact: 7, severity: 'High', resolutionTime: 3 },
-  { name: 'Outliers', count: 50, impact: 5, severity: 'Low', resolutionTime: 1 },
-  { name: 'Invalid Data', count: 90, impact: 7, severity: 'Medium', resolutionTime: 2 },
-];
-
-const dummyDataErrorRates = [
-  { date: '2023-01-01', rate: 5.2, threshold: 3, criticalErrors: 12, warningErrors: 28 },
-  { date: '2023-02-01', rate: 4.8, threshold: 3, criticalErrors: 10, warningErrors: 25 },
-  { date: '2023-03-01', rate: 4.1, threshold: 3, criticalErrors: 8, warningErrors: 22 },
-  { date: '2023-04-01', rate: 3.7, threshold: 3, criticalErrors: 7, warningErrors: 20 },
-  { date: '2023-05-01', rate: 3.2, threshold: 3, criticalErrors: 5, warningErrors: 18 },
-];
-
-
-const dummyDataCleaningMethods = [
-  { name: 'Manual Review', efficiency: 75, timeSpent: 20 },
-  { name: 'Automated Scripts', efficiency: 90, timeSpent: 5 },
-  { name: 'Machine Learning', efficiency: 85, timeSpent: 10 },
-  { name: 'Data Validation Rules', efficiency: 80, timeSpent: 15 },
-];
-
-const dummyDataSourceReliability = [
-  { name: 'Source A', reliability: 90 },
-  { name: 'Source B', reliability: 75 },
-  { name: 'Source C', reliability: 85 },
-  { name: 'Source D', reliability: 70 },
-];
-
-const dummyDataCostSavings = [
-  { month: 'Jan', savings: 5000 },
-  { month: 'Feb', savings: 7000 },
-  { month: 'Mar', savings: 6500 },
-  { month: 'Apr', savings: 8000 },
-  { month: 'May', savings: 9500 },
-];
 
 const DataCleaningTab = ({ dateRange }) => (
   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -1709,14 +1690,6 @@ const DataCleaningTab = ({ dateRange }) => (
     </ChartCard>
   </div>
 );
-
-const dummyDataTimeEfficiency = [
-  { name: 'Method A', timeSeconds: 120, efficiencyPercentage: 85 },
-  { name: 'Method B', timeSeconds: 90, efficiencyPercentage: 92 },
-  { name: 'Method C', timeSeconds: 150, efficiencyPercentage: 78 },
-  { name: 'Method D', timeSeconds: 60, efficiencyPercentage: 95 },
-];
-
 
 const ChartCard = ({ title, children, className = '' }) => (
   <div className={`bg-white p-6 rounded-lg shadow-md border border-teal-200 ${className}`}>
@@ -2026,24 +1999,6 @@ const DataMasteringTab = ({ dateRange }) => (
   </div>
 );
 
-const queueLengthData = [
-  { time: '00:00', queueLength: 10, processingSpeed: 5 },
-  { time: '04:00', queueLength: 15, processingSpeed: 6 },
-  { time: '08:00', queueLength: 20, processingSpeed: 7 },
-  { time: '12:00', queueLength: 25, processingSpeed: 5 },
-  { time: '16:00', queueLength: 30, processingSpeed: 4 },
-  { time: '20:00', queueLength: 20, processingSpeed: 6 },
-];
-
-// Updated dummy data for Performance Improvement Trends
-const performanceImprovementData = [
-  { month: 'Jan', optimization: 20, bugFixes: 15, newFeatures: 5 },
-  { month: 'Feb', optimization: 25, bugFixes: 10, newFeatures: 8 },
-  { month: 'Mar', optimization: 30, bugFixes: 8, newFeatures: 12 },
-  { month: 'Apr', optimization: 35, bugFixes: 5, newFeatures: 15 },
-  { month: 'May', optimization: 40, bugFixes: 3, newFeatures: 18 },
-];
-
 // Performance Tab
 const PerformanceTab = ({ dateRange }) => (
   <div className="grid grid-cols-3 gap-4">
@@ -2215,8 +2170,6 @@ const PerformanceTab = ({ dateRange }) => (
     </div>
   </div>
 );
-
-
 
 const ErrorsTab = ({ dateRange }) => {
   const [activeTab, setActiveTab] = useState('errorCounts');
