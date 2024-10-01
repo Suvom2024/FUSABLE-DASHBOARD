@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef,useMemo } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { Tabs, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -20,7 +20,117 @@ import { Sparkles } from 'lucide-react';
 import { CheckIcon, MinusIcon } from 'lucide-react';
 import { AlertTriangle, TrendingUp, List } from 'lucide-react';
 import { Activity, RefreshCw } from 'lucide-react';
-import { FaCog } from 'react-icons/fa';
+import Select from 'react-select';
+
+const dummyData = {
+  '15010647232': [
+    { sourceName: 'RigDig', sourceRecordId: '11066098', name: 'Winey BICE Inc', address: '8246 w mineral king ave visalia ca 93291 us', secondaryName: '', secondaryAddress: '' },
+    { sourceName: 'UCCDebtor', sourceRecordId: '5561215_d1', name: 'WINEY-BICE, INC', address: 'po box 2629 visalia ca 93279 us', secondaryName: '', secondaryAddress: 'p o box 2629 visalia ca 93279 2629 us' },
+    { sourceName: 'EDABuyer', sourceRecordId: 'J202774', name: 'WINEY BICE INC', address: '93279 2629 us', secondaryName: '', secondaryAddress: '' },
+  ],
+  '15010647233': [
+    { sourceName: 'SourceA', sourceRecordId: 'A123', name: 'Company A', address: '123 Main St, City A, State A', secondaryName: 'A Corp', secondaryAddress: 'PO Box 123, City A' },
+    { sourceName: 'SourceB', sourceRecordId: 'B456', name: 'Company A Inc', address: '123 Main Street, City A, ST', secondaryName: '', secondaryAddress: '' },
+    { sourceName: 'SourceC', sourceRecordId: 'C789', name: 'A Company', address: 'Main St, City A', secondaryName: '', secondaryAddress: '' },
+  ],
+  // Add more dummy data for other Fusable IDs...
+};
+
+const FusableRecordsMerger = () => {
+  const [selectedFusableId, setSelectedFusableId] = useState(null);
+  const fusableIdOptions = useMemo(() => 
+    Object.keys(dummyData).map(id => ({ value: id, label: id })),
+    []
+  );
+
+  const handleFusableIdChange = (selectedOption) => {
+    setSelectedFusableId(selectedOption);
+  };
+
+  const mergedRecords = selectedFusableId ? dummyData[selectedFusableId.value] : [];
+
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      borderColor: '#4DB6AC',
+      '&:hover': {
+        borderColor: '#26A69A',
+      },
+      boxShadow: 'none',
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? '#00796B' : state.isFocused ? '#B2DFDB' : null,
+      color: state.isSelected ? 'white' : '#00796B',
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: '#00796B',
+    }),
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-gradient-to-br from-teal-50 to-teal-100 p-6 rounded-lg shadow-lg border border-teal-200"
+    >
+      <h2 className="text-3xl font-bold text-teal-800 mb-6">Fusable Records Merger</h2>
+      <div className="mb-6 relative">
+        <Select
+          value={selectedFusableId}
+          onChange={handleFusableIdChange}
+          options={fusableIdOptions}
+          styles={customStyles}
+          placeholder="Search or select a Fusable ID"
+          isClearable
+          isSearchable
+        />
+      </div>
+      <AnimatePresence>
+        {mergedRecords.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.5 }}
+            className="overflow-x-auto bg-white rounded-lg shadow-inner"
+          >
+            <table className="min-w-full divide-y divide-teal-200">
+              <thead className="bg-teal-600">
+                <tr>
+                  {['Source Name', 'Source Record Id', 'Name', 'Address', 'Secondary Name', 'Secondary Address'].map((header) => (
+                    <th key={header} className="px-6 py-3 text-left text-xs font-medium text-teal-50 uppercase tracking-wider">
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-teal-100">
+                {mergedRecords.map((record, index) => (
+                  <motion.tr
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    className="hover:bg-teal-50 transition-colors duration-150"
+                  >
+                    {Object.values(record).map((value, cellIndex) => (
+                      <td key={cellIndex} className="px-6 py-4 whitespace-nowrap text-sm text-teal-800">
+                        {value}
+                      </td>
+                    ))}
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
 
 
 
@@ -70,9 +180,12 @@ const dummyDataDuplicateResolution = [
 ];
 
 const dummyDataDeduplication = [
-  { name: 'Before', records: 10000, uniqueRecords: 9500, dataSizeGB: 5, processingTimeMin: 0 },
-  { name: 'After', records: 9700, uniqueRecords: 9700, dataSizeGB: 4.85, processingTimeMin: 15 },
+  { name: 'Dataset A', total: 1000, unique: 800, duplicate: 200 },
+  { name: 'Dataset B', total: 1500, unique: 1200, duplicate: 300 },
+  { name: 'Dataset C', total: 800, unique: 600, duplicate: 200 },
+  { name: 'Dataset D', total: 2000, unique: 1600, duplicate: 400 },
 ];
+
 
 const dummyDataMasteredRecords = [
   { date: '2023-01-01', records: 8000, confidence: 85, completeness: 90, accuracy: 88 },
@@ -660,7 +773,7 @@ export default function Component() {
           color="red"
         />
       </div> */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <KPICard
           icon={<FaDatabase />}
           title="Total Records Processed"
@@ -668,15 +781,6 @@ export default function Component() {
           description="Across all pipeline stages"
           trend="up"
           trendValue="5.2%"
-        />
-        <KPICard
-          icon={<FaCopy />}
-          title="Duplicates Removed"
-          value="12,345"
-          description="Total duplicates identified and removed"
-          trend="down"
-          trendValue="2.1%"
-          color="blue"
         />
         <KPICard
           icon={<FaMagic />}
@@ -688,13 +792,22 @@ export default function Component() {
           color="purple"
         />
         <KPICard
-          icon={<FaExclamationTriangle />}
-          title="Total Errors"
-          value="1,234"
-          description="Errors encountered across all stages"
+          icon={<FaCopy />}
+          title="Duplicates Removed"
+          value="12,345"
+          description="Total duplicates identified and removed"
           trend="down"
-          trendValue="0.8%"
-          color="red"
+          trendValue="2.1%"
+          color="blue"
+        />
+        <KPICard
+          icon={<FaLayerGroup />}
+          title="Average Cluster Size"
+          value="2.4"
+          description="Average number of records per cluster"
+          trend="up"
+          trendValue="0.3"
+          color="amber"
         />
       </div>
 
@@ -1034,6 +1147,10 @@ const OverviewTab = ({ dateRange }) => (
     transition={{ duration: 0.5 }}
     className="grid grid-cols-1 md:grid-cols-2 gap-8"
   >
+    <div className="col-span-1 md:col-span-2">
+      <FusableRecordsMerger />
+    </div>
+
     {/* Pipeline Processing Status */}
     <PipelineProcessingStatus />
 
@@ -1157,20 +1274,20 @@ const OverviewTab = ({ dateRange }) => (
 
 
     {/* Records Before and After Deduplication */}
-    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300">
-      <h2 className="text-3xl font-semibold text-teal-800 mb-6">Records Before and After Deduplication</h2>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={dummyDataDeduplication}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-          <Bar dataKey="records" name="Total Records" fill="#00796B" />
-          <Bar dataKey="uniqueRecords" name="Unique Records" fill="#4DB6AC" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300"> 
+        <h2 className="text-3xl font-semibold text-teal-800 mb-6">Records Before and After Deduplication</h2> 
+        <ResponsiveContainer width="100%" height={400}> 
+          <BarChart data={dummyDataDeduplication}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend />
+            <Bar dataKey="unique" name="Unique Records" fill="#00796B" stackId="a" />
+            <Bar dataKey="duplicate" name="Duplicate Records" fill="#4DB6AC" stackId="a" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     {/* Processing Time by Stage */}
     <Card className="border border-teal-200 ring-1 ring-teal-300">
       <div className="p-6">
