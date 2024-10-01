@@ -11,7 +11,7 @@ import {
 import {
   FaDatabase, FaClipboardCheck, FaCopy, FaMagic, FaClock, FaExclamationTriangle,
   FaChartLine, FaFilter, FaSearch, FaSyncAlt, FaDownload, FaUpload, FaUsersCog,
-  FaNetworkWired, FaCogs, FaServer, FaCloudUploadAlt,
+  FaNetworkWired, FaCogs, FaServer, FaLayerGroup ,
   FaChartBar
 } from 'react-icons/fa';
 import { format} from 'date-fns';
@@ -651,43 +651,43 @@ export default function Component() {
           color="red"
         />
       </div> */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-      <KPICard
-        icon={<FaDatabase />}
-        title="Total Records Processed"
-        value="1,234,567"
-        description="Across all pipeline stages"
-        trend="up"
-        trendValue="5.2%"
-      />
-      <KPICard
-        icon={<FaCopy />}
-        title="Duplicates Removed"
-        value="12,345"
-        description="Total duplicates identified and removed"
-        trend="down"
-        trendValue="2.1%"
-        color="blue"
-      />
-      <KPICard
-        icon={<FaMagic />}
-        title="Mastered Records"
-        value="987,654"
-        description="Total number of mastered records created"
-        trend="up"
-        trendValue="3.7%"
-        color="purple"
-      />
-      <KPICard
-        icon={<FaExclamationTriangle />}
-        title="Total Errors"
-        value="1,234"
-        description="Errors encountered across all stages"
-        trend="down"
-        trendValue="0.8%"
-        color="red"
-      />
-    </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <KPICard
+          icon={<FaDatabase />}
+          title="Total Records Processed"
+          value="1,234,567"
+          description="Across all pipeline stages"
+          trend="up"
+          trendValue="5.2%"
+        />
+        <KPICard
+          icon={<FaMagic />}
+          title="Mastered Records"
+          value="987,654"
+          description="Total number of mastered records created"
+          trend="up"
+          trendValue="3.7%"
+          color="purple"
+        />
+        <KPICard
+          icon={<FaCopy />}
+          title="Duplicates Removed"
+          value="12,345"
+          description="Total duplicates identified and removed"
+          trend="down"
+          trendValue="2.1%"
+          color="blue"
+        />
+        <KPICard
+          icon={<FaLayerGroup />}
+          title="Average Cluster Size"
+          value="2.4"
+          description="Average number of records per cluster"
+          trend="up"
+          trendValue="0.3"
+          color="amber"
+        />
+      </div>
 
 
       {/* Tabs for different sections */}
