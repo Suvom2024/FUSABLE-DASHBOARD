@@ -27,18 +27,81 @@ const COLORS = ['#00796B', '#26A69A', '#4DB6AC', '#80CBC4', '#B2DFDB', '#E0F2F1'
 const ACCENT_COLORS = ['#FFC107', '#FF9800', '#FF5722', '#F44336', '#E91E63', '#9C27B0'];
 
 // Utility functions
+// const dummyData = {
+//   '15010647232': [
+//     { sourceName: 'RigDig', sourceRecordId: '11066098', name: 'Winey BICE Inc', address: '8246 w mineral king ave visalia ca 93291 us', secondaryName: '', secondaryAddress: '' },
+//     { sourceName: 'UCCDebtor', sourceRecordId: '5561215_d1', name: 'WINEY-BICE, INC', address: 'po box 2629 visalia ca 93279 us', secondaryName: '', secondaryAddress: 'p o box 2629 visalia ca 93279 2629 us' },
+//     { sourceName: 'EDABuyer', sourceRecordId: 'J202774', name: 'WINEY BICE INC', address: '93279 2629 us', secondaryName: '', secondaryAddress: '' },
+//   ],
+//   '15010647233': [
+//     { sourceName: 'SourceA', sourceRecordId: 'A123', name: 'Company A', address: '123 Main St, City A, State A', secondaryName: 'A Corp', secondaryAddress: 'PO Box 123, City A' },
+//     { sourceName: 'SourceB', sourceRecordId: 'B456', name: 'Company A Inc', address: '123 Main Street, City A, ST', secondaryName: '', secondaryAddress: '' },
+//     { sourceName: 'SourceC', sourceRecordId: 'C789', name: 'A Company', address: 'Main St, City A', secondaryName: '', secondaryAddress: '' },
+//   ],
+// };
+
 const dummyData = {
-  '15010647232': [
-    { sourceName: 'RigDig', sourceRecordId: '11066098', name: 'Winey BICE Inc', address: '8246 w mineral king ave visalia ca 93291 us', secondaryName: '', secondaryAddress: '' },
-    { sourceName: 'UCCDebtor', sourceRecordId: '5561215_d1', name: 'WINEY-BICE, INC', address: 'po box 2629 visalia ca 93279 us', secondaryName: '', secondaryAddress: 'p o box 2629 visalia ca 93279 2629 us' },
-    { sourceName: 'EDABuyer', sourceRecordId: 'J202774', name: 'WINEY BICE INC', address: '93279 2629 us', secondaryName: '', secondaryAddress: '' },
+  totalRecordsProcessed: 4091837,
+  masteredRecords: 646775,
+  duplicatesRemoved: 1995725,
+  averageClusterSize: 3.1,
+  maxClusterSize: 2997,
+  sourceData: [
+    { name: 'Carrier', totalRows: 173774, rowsProcessed: 173750, errorRows: 24, duplicatesFound: 172740 },
+    { name: 'EDABuyer', totalRows: 353711, rowsProcessed: 353711, errorRows: 0, duplicatesFound: 143556 },
+    { name: 'IronDealers', totalRows: 986, rowsProcessed: 985, errorRows: 1, duplicatesFound: 332 },
+    { name: 'RigDig', totalRows: 483477, rowsProcessed: 483448, errorRows: 29, duplicatesFound: 473755 },
+    { name: 'UCCSecuredParty', totalRows: 136066, rowsProcessed: 136066, errorRows: 0, duplicatesFound: 79703 },
+    { name: 'USFarm', totalRows: 72694, rowsProcessed: 72693, errorRows: 1, duplicatesFound: 25936 },
+    { name: 'UCCDebtor', totalRows: 2406475, rowsProcessed: 2406394, errorRows: 81, duplicatesFound: 642890 },
+    { name: 'USDOT', totalRows: 464654, rowsProcessed: 464596, errorRows: 58, duplicatesFound: 456813 },
   ],
-  '15010647233': [
-    { sourceName: 'SourceA', sourceRecordId: 'A123', name: 'Company A', address: '123 Main St, City A, State A', secondaryName: 'A Corp', secondaryAddress: 'PO Box 123, City A' },
-    { sourceName: 'SourceB', sourceRecordId: 'B456', name: 'Company A Inc', address: '123 Main Street, City A, ST', secondaryName: '', secondaryAddress: '' },
-    { sourceName: 'SourceC', sourceRecordId: 'C789', name: 'A Company', address: 'Main St, City A', secondaryName: '', secondaryAddress: '' },
+  processingTimes: [
+    { stage: "Ingestion", time: 154 }, // 2h 34 mins = 154 mins
+    { stage: "Data Mastering", time: 300 }, // 5 hours = 300 mins
+    { stage: "Export", time: 120 }, // 2 hours = 120 mins
+  ],
+  ingestionData: [
+    { name: 'Carrier', records: 173774, size: 52132 },
+    { name: 'EDABuyer', records: 353711, size: 106113 },
+    { name: 'IronDealers', records: 986, size: 296 },
+    { name: 'RigDig', records: 483477, size: 145043 },
+    { name: 'UCCSecuredParty', records: 136066, size: 40820 },
+    { name: 'USFarm', records: 72694, size: 21808 },
+    { name: 'UCCDebtor', records: 2406475, size: 721943 },
+    { name: 'USDOT', records: 464654, size: 139396 },
+  ],
+  cleaningData: [
+    { name: 'Carrier', beforeRecords: 173774, afterRecords: 173750, dataQuality: 99.99 },
+    { name: 'EDABuyer', beforeRecords: 353711, afterRecords: 353711, dataQuality: 100 },
+    { name: 'IronDealers', beforeRecords: 986, afterRecords: 985, dataQuality: 99.90 },
+    { name: 'RigDig', beforeRecords: 483477, afterRecords: 483448, dataQuality: 99.99 },
+    { name: 'UCCSecuredParty', beforeRecords: 136066, afterRecords: 136066, dataQuality: 100 },
+    { name: 'USFarm', beforeRecords: 72694, afterRecords: 72693, dataQuality: 100 },
+    { name: 'UCCDebtor', beforeRecords: 2406475, afterRecords: 2406394, dataQuality: 100 },
+    { name: 'USDOT', beforeRecords: 464654, afterRecords: 464596, dataQuality: 99.99 },
+  ],
+  qualityIssues: [
+    { name: 'Invalid/Parsing Failure', count: 194 },
+    { name: 'Duplicates', count: 1995725 },
+  ],
+  deduplicationData: [
+    { name: 'Carrier', beforeRecords: 173750, afterRecords: 1010, duplicates: 172740 },
+    { name: 'EDABuyer', beforeRecords: 353711, afterRecords: 210155, duplicates: 143556 },
+    { name: 'IronDealers', beforeRecords: 985, afterRecords: 653, duplicates: 332 },
+    { name: 'RigDig', beforeRecords: 483448, afterRecords: 9693, duplicates: 473755 },
+    { name: 'UCCSecuredParty', beforeRecords: 136066, afterRecords: 56363, duplicates: 79703 },
+    { name: 'USFarm', beforeRecords: 72693, afterRecords: 46757, duplicates: 25936 },
+    { name: 'UCCDebtor', beforeRecords: 2406394, afterRecords: 1763504, duplicates: 642890 },
+    { name: 'USDOT', beforeRecords: 464596, afterRecords: 7783, duplicates: 456813 },
+  ],
+  pipelineStageDistribution: [
+    { name: 'Ingestion', time: 154 },
+    { name: 'Data Mastering', time: 300 },
+    { name: 'Export', time: 120 },
   ],
 };
+
 const dummyDataPieChart = [
   { name: 'Category A', value: 400 },
   { name: 'Category B', value: 300 },
@@ -863,42 +926,37 @@ export default function Component() {
           color="red"
         />
       </div> */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <KPICard
-          icon={<FaDatabase />}
-          title="Total Records Processed"
-          value="1,234,567"
-          description="Across all pipeline stages"
-          trend="up"
-          trendValue="5.2%"
-        />
-        <KPICard
-          icon={<FaMagic />}
-          title="Mastered Records"
-          value="987,654"
-          description="Total number of mastered records created"
-          trend="up"
-          trendValue="3.7%"
-          color="purple"
-        />
-        <KPICard
-          icon={<FaCopy />}
-          title="Duplicates Removed"
-          value="12,345"
-          description="Total duplicates identified and removed"
-          trend="down"
-          trendValue="2.1%"
-          color="blue"
-        />
-        <KPICard
-          icon={<FaLayerGroup />}
-          title="Average Cluster Size"
-          value="2.4"
-          description="Average number of records per cluster"
-          trend="up"
-          trendValue="0.3"
-          color="amber"
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <KPICard
+      icon={<FaDatabase />}
+      title="Total Records Processed"
+      value={dummyData.totalRecordsProcessed.toLocaleString()}
+      description="Across all pipeline stages"
+    />
+    <KPICard
+      icon={<FaMagic />}
+      title="Mastered Records"
+      value={dummyData.masteredRecords.toLocaleString()}
+      description="Total number of mastered records created"
+    />
+    <KPICard
+      icon={<FaCopy />}
+      title="Duplicates Removed"
+      value={dummyData.duplicatesRemoved.toLocaleString()}
+      description="Total duplicates identified and removed"
+    />
+    <KPICard
+      icon={<FaLayerGroup />}
+      title="Average Cluster Size"
+      value={dummyData.averageClusterSize.toFixed(1)}
+      description="Average number of records per cluster"
+    />
+    <KPICard
+      icon={<FaChartBar />}
+      title="Max Cluster Size"
+      value={dummyData.maxClusterSize.toLocaleString()}
+      description="Largest cluster of records"
+    />
       </div>
 
 
@@ -955,11 +1013,9 @@ const PipelineProcessingStatus = () => {
   };
 
   const stages = [
-    { name: 'Data Ingestion', completed: true },
-    { name: 'Data Cleaning', completed: true },
-    { name: 'Deduplication', completed: true },
-    { name: 'Record Mastering', completed: false },
-    { name: 'Error Handling', completed: false }
+    { name: 'Ingestion', completed: true },
+    { name: 'Data Mastering', completed: true },
+    { name: 'Export', completed: true }
   ];
 
   return (
@@ -967,11 +1023,11 @@ const PipelineProcessingStatus = () => {
       <div className="p-6">
         <h2 className="text-2xl font-bold text-teal-800 mb-4">Pipeline Processing Status</h2>
         <div className="mb-4">
-          <Progress value={75} className="h-2" />
+          <Progress value={100} className="h-2" />
         </div>
         <div className="flex justify-between text-sm text-teal-700">
-          <span>75% Complete</span>
-          <span>Estimated: 2h 15m</span>
+          <span>100% Complete</span>
+          <span>Estimated: 9h 34m</span>
         </div>
         <button
           className="mt-4 px-4 py-2 bg-teal-600 text-white rounded-full hover:bg-teal-700 transition duration-300 shadow-md"
@@ -1196,9 +1252,7 @@ const OverviewTab = ({ dateRange }) => (
     transition={{ duration: 0.5 }}
     className="grid grid-cols-1 md:grid-cols-2 gap-8"
   >
-    <div className="col-span-1 md:col-span-2">
-      <FusableRecordsMerger />
-    </div>
+    
 
     {/* Pipeline Processing Status */}
     <PipelineProcessingStatus />
@@ -1230,125 +1284,137 @@ const OverviewTab = ({ dateRange }) => (
 
     {/* Records and File Size Distribution */}
     <div className="bg-white p-6 rounded-lg shadow-md border border-teal-200 ring-1 ring-teal-300">
-      <h2 className="text-2xl font-semibold text-teal-800 mb-4">Records and File Size Distribution</h2>
+      <h2 className="text-2xl font-bold text-teal-800 mb-4">Records and File Size Distribution</h2>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={dummyDataIngestion}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
-          <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-          <Bar yAxisId="left" dataKey="records" name="Records" fill="#00796B" />
-          <Bar yAxisId="right" dataKey="size" name="File Size (KB)" fill="#FFC107" />
-        </BarChart>
-      </ResponsiveContainer>
+      <BarChart data={dummyData.ingestionData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
+        <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
+        <Tooltip content={<CustomTooltip />} />
+        <Legend />
+        <Bar yAxisId="left" dataKey="records" name="Records" fill="#00796B" />
+        <Bar yAxisId="right" dataKey="size" name="File Size (KB)" fill="#FFC107" />
+      </BarChart>
+    </ResponsiveContainer>
     </div>
 
     {/* Data Source Distribution */}
-    <div className="bg-white p-6 rounded-lg shadow-md border border-teal-200 ring-1 ring-teal-300">
-      <h2 className="text-2xl font-semibold text-teal-800 mb-4">Data Source Distribution</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <PieChart>
-          <Pie
-            data={dummyDataSourceDistribution}
-            cx="50%"
-            cy="50%"
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
-            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-          >
-            {dummyDataSourceDistribution.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
-
-    {/* Records Before and After Cleaning */}
-    <ChartCard title="Records Before and After Cleaning" className="ring-1 ring-teal-300">
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={dummyDataCleaning}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
-          <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-          <Bar yAxisId="left" dataKey="records" name="Records" fill="#00796B" />
-          <Bar yAxisId="right" dataKey="dataQuality" name="Data Quality (%)" fill="#FFC107" />
-        </BarChart>
-      </ResponsiveContainer>
-    </ChartCard>
-
-    {/* Data Quality Issues Found */}
-    <ChartCard title="Data Quality Issues Found" className="ring-1 ring-teal-300">
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={dummyDataQualityIssues} layout="vertical">
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" />
-          <YAxis dataKey="name" type="category" width={150} />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-          <Bar dataKey="count" name="Issue Count" fill="#00796B">
-            {dummyDataQualityIssues.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
-    </ChartCard>
-
-
-    {/* Number of Duplicates Found */}
-    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300">
-      <h2 className="text-3xl font-semibold text-teal-800 mb-6">Number of Duplicates Found</h2>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={dummyDataDuplicates}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="source" />
-          <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
-          <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-          <Bar yAxisId="left" dataKey="duplicates" name="Duplicates" fill="#00796B" />
-          <Bar yAxisId="right" dataKey="percentage" name="Percentage (%)" fill="#FFC107" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-
-
-    {/* Records Before and After Deduplication */}
-    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300"> 
-        <h2 className="text-3xl font-semibold text-teal-800 mb-6">Records Before and After Deduplication</h2> 
-        <ResponsiveContainer width="100%" height={400}> 
-          <BarChart data={dummyDataDeduplication}>
+    <Card className="border border-teal-200 ring-1 ring-teal-300">
+      <div className="p-6">
+        <h2 className="text-2xl font-bold text-teal-800 mb-4">Data Source Distribution</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={dummyData.sourceData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
-            <Bar dataKey="unique" name="Unique Records" fill="#00796B" stackId="a" />
-            <Bar dataKey="duplicate" name="Duplicate Records" fill="#4DB6AC" stackId="a" />
+            <Bar dataKey="totalRows" name="Total Rows" fill="#00796B" />
+            <Bar dataKey="duplicatesFound" name="Duplicates Found" fill="#FFC107" />
           </BarChart>
         </ResponsiveContainer>
+      </div>
+    </Card>
+
+    {/* Records Before and After Cleaning */}
+    <ChartCard   title={<span className="text-2xl font-bold text-teal-800 mb-4">Records Before and After Cleaning</span>} 
+ className="ring-1 ring-teal-300">
+      <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={dummyData.cleaningData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
+        <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
+        <Tooltip content={<CustomTooltip />} />
+        <Legend />
+        <Bar yAxisId="left" dataKey="beforeRecords" name="Before Cleaning" fill="#00796B" />
+        <Bar yAxisId="left" dataKey="afterRecords" name="After Cleaning" fill="#4DB6AC" />
+        <Line yAxisId="right" type="monotone" dataKey="dataQuality" name="Data Quality (%)" stroke="#FFC107" />
+      </BarChart>
+    </ResponsiveContainer>
+    </ChartCard>
+
+    {/* Data Quality Issues Found */}
+    <ChartCard 
+  title={<span className="text-2xl font-bold text-teal-800 mb-4">Data Quality Issues Found</span>} 
+  className="ring-1 ring-teal-300"
+>
+<ResponsiveContainer width="100%" height={300}>
+      <BarChart data={dummyData.qualityIssues} layout="vertical">
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis type="number" />
+        <YAxis dataKey="name" type="category" width={150} />
+        <Tooltip content={<CustomTooltip />} />
+        <Legend />
+        <Bar dataKey="count" name="Issue Count" fill="#00796B" />
+      </BarChart>
+    </ResponsiveContainer>
+    </ChartCard>
+
+
+    {/* Number of Duplicates Found */}
+    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300">
+    <h2 className="text-2xl font-bold text-teal-800 mb-4">Number of Duplicates Found</h2>
+    <ResponsiveContainer width="100%" height={400}>
+      <BarChart data={dummyData.deduplicationData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip content={<CustomTooltip />} />
+        <Legend />
+        <Bar dataKey="duplicates" name="Duplicates" fill="#00796B" />
+        <Bar dataKey="afterRecords" name="Unique Records" fill="#4DB6AC" />
+      </BarChart>
+    </ResponsiveContainer>
+    </div>
+
+
+    {/* Records Before and After Deduplication */}
+    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300"> 
+    <h2 className="text-2xl font-bold text-teal-800 mb-4">Records Before and After Deduplication</h2> 
+    <ResponsiveContainer width="100%" height={400}>
+      <BarChart data={dummyData.deduplicationData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip content={<CustomTooltip />} />
+        <Legend />
+        <Bar dataKey="beforeRecords" name="Before Deduplication" fill="#00796B" />
+        <Bar dataKey="afterRecords" name="After Deduplication" fill="#4DB6AC" />
+      </BarChart>
+    </ResponsiveContainer>
       </div>
     {/* Processing Time by Stage */}
     <Card className="border border-teal-200 ring-1 ring-teal-300">
       <div className="p-6">
         <h2 className="text-2xl font-bold text-teal-800 mb-4">Processing Time by Stage</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={dummyDataProcessingTime}>
+          <BarChart data={dummyData.processingTimes}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
             <XAxis dataKey="stage" tick={{ fill: '#4a5568', fontWeight: '500' }} />
-            <YAxis tick={{ fill: '#4a5568', fontWeight: '500' }} />
-            <Tooltip content={<CustomTooltip />} />
+            <YAxis 
+              tick={{ fill: '#4a5568', fontWeight: '500' }} 
+              label={{ value: 'Time (minutes)', angle: -90, position: 'insideLeft' }}
+            />
+            <Tooltip 
+              content={({ payload, label }) => {
+                if (payload && payload.length) {
+                  const time = payload[0].value;
+                  const hours = Math.floor(time / 60);
+                  const minutes = time % 60;
+                  return (
+                    <div className="bg-white p-2 border border-gray-300 rounded shadow">
+                      <p className="font-bold">{label}</p>
+                      <p>{`${hours}h ${minutes}m`}</p>
+                    </div>
+                  );
+                }
+                return null;
+              }}
+            />
             <Legend />
-            <Bar dataKey="time" name="Current Time" fill="#38b2ac" />
+            <Bar dataKey="time" name="Processing Time" fill="#38b2ac" />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -1358,52 +1424,42 @@ const OverviewTab = ({ dateRange }) => (
     <Card className="border border-teal-200 ring-1 ring-teal-300">
       <div className="p-6">
         <h2 className="text-2xl font-bold text-teal-800 mb-4">Pipeline Stage Distribution</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={dummyDataPieChart}
-              cx="50%"
-              cy="50%"
-              innerRadius={60}
-              outerRadius={100}
-              fill="#8884d8"
-              paddingAngle={5}
-              dataKey="value"
-            >
-              {dummyDataPieChart.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
+        <ResponsiveContainer width="100%" height={350}>
+      <PieChart>
+        <Pie
+          data={dummyData.pipelineStageDistribution}
+          cx="50%"
+          cy="50%"
+          labelLine={false}
+          outerRadius={150}
+          fill="#8884d8"
+          dataKey="time"
+          label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+        >
+          {dummyData.pipelineStageDistribution.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip content={<CustomTooltip />} />
+        <Legend />
+      </PieChart>
+    </ResponsiveContainer>
       </div>
     </Card>
     {/* Error Counts by Type */}
     <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-red-300 ring-1 ring-teal-300 col-span-2">
       <h2 className="text-3xl font-semibold text-red-800 mb-6">Error Trends Over Time</h2>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={dummyDataErrorCounts}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#FED7D7" />
-          <XAxis dataKey="type" stroke="#9B2C2C" />
-          <YAxis stroke="#9B2C2C" />
-          <Tooltip contentStyle={{ backgroundColor: '#FFF5F5', border: '1px solid #FC8181' }} />
-          <Legend />
-          <Bar dataKey="count" name="Error Count" fill="#FC8181" radius={[8, 8, 0, 0]}>
-            {dummyDataErrorCounts.map((entry, index) => (
-              <motion.rect
-                key={`bar-${index}`}
-                initial={{ y: 100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: index * 0.1 }}
-              />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+      <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={dummyData.sourceData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend />
+            <Bar dataKey="errorRows" name="Error Rows" fill="#F44336" />
+          </BarChart>
+        </ResponsiveContainer>
     </div>
-
   </motion.div>
 );
 
