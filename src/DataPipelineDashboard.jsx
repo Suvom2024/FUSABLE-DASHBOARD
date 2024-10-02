@@ -151,10 +151,10 @@ const dummyDataDuplicateResolution = [
 ];
 
 const dummyDataDeduplication = [
-  { name: 'Customer Records', total: 50000, unique: 48500, duplicate: 1500 },
-  { name: 'Transaction Data', total: 100000, unique: 99200, duplicate: 800 },
-  { name: 'Product Catalog', total: 20000, unique: 19600, duplicate: 400 },
-  { name: 'Marketing Contacts', total: 30000, unique: 28800, duplicate: 1200 },
+  { name: 'Customer Records', total: 50000, unique: 48500, duplicate: 15000 },
+  { name: 'Transaction Data', total: 100000, unique: 99200, duplicate: 18000 },
+  { name: 'Product Catalog', total: 20000, unique: 19600, duplicate: 40000 },
+  { name: 'Marketing Contacts', total: 30000, unique: 28800, duplicate: 12000 },
 ];
 
 const dummyDataMasteredRecords = [
@@ -621,8 +621,8 @@ const DataPipelineTabs = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <div className="bg-gradient-to-r from-teal-100 to-teal-200 p-1 rounded-xl shadow-lg mb-4">
-      <div className="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg p-2 flex space-x-2 overflow-x-auto">
+    <div className="bg-gradient-to-r from-teal-100 to-teal-200 mt-6 p-1 rounded-xl shadow-lg mb-4">
+      <div className="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg  p-2 flex space-x-2 overflow-x-auto">
         {tabs.map((tab, index) => (
           <TabItem
             key={index}
