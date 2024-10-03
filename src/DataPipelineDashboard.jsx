@@ -40,6 +40,150 @@ const ACCENT_COLORS = ['#FFC107', '#FF9800', '#FF5722', '#F44336', '#E91E63', '#
 //   ],
 // };
 
+const dummData = {
+  '15011293834_197': [
+    {
+      sourceName: 'UCCDebtor',
+      sourceRecordId: '9189193_d1',
+      name: 'EIDEN INC',
+      address: '1111 santa monica blvd ste 1840 los angeles ca 90025 us',
+      secondaryName: '',
+      secondaryAddress: ''
+    },
+    {
+      sourceName: 'UCCDebtor',
+      sourceRecordId: '21488451_d1',
+      name: 'EIDEN INC',
+      address: '11111 santa monica blvd ste 1840 los angeles ca 90025 us',
+      secondaryName: '',
+      secondaryAddress: ''
+    }
+  ],
+  '15010647231_197': [
+    {
+      sourceName: 'UCCDebtor',
+      sourceRecordId: '22732699_d1',
+      name: 'SHAKLEE CORP',
+      address: '4747 billow rd pleasanton ca 945882763 us',
+      secondaryName: '',
+      secondaryAddress: ''
+    },
+    {
+      sourceName: 'UCCDebtor',
+      sourceRecordId: '30630704_d1',
+      name: 'SHAKLEE CORP',
+      address: '4747 willow rd pleasanton ca 94588 us',
+      secondaryName: '',
+      secondaryAddress: ''
+    },
+    {
+      sourceName: 'EDABuyer',
+      sourceRecordId: 'J367011',
+      name: 'Shaklee Corp',
+      address: '4747 willow rd pleasanton ca 94588 us',
+      secondaryName: '',
+      secondaryAddress: '6920 koll center pkwy pleasanton ca 94566 us'
+    }
+  ],
+};
+
+const FusableRecordsMerger = () => {
+  const [selectedFusableId, setSelectedFusableId] = useState(null);
+  const fusableIdOptions = useMemo(() => 
+    Object.keys(dummData).map(id => ({ value: id, label: id })),
+    []
+  );
+
+  const handleFusableIdChange = (selectedOption) => {
+    setSelectedFusableId(selectedOption);
+  };
+
+  const mergedRecords = selectedFusableId ? dummData[selectedFusableId.value] : [];
+
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      borderColor: '#4DB6AC',
+      '&:hover': {
+        borderColor: '#26A69A',
+      },
+      boxShadow: 'none',
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? '#00796B' : state.isFocused ? '#B2DFDB' : null,
+      color: state.isSelected ? 'white' : '#00796B',
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: '#00796B',
+    }),
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-gradient-to-br from-teal-50 to-teal-100 p-6 rounded-lg shadow-lg border border-teal-200"
+    >
+      <h2 className="text-3xl font-bold text-teal-800 mb-6">Fusable Records Merger</h2>
+      <div className="mb-6 relative">
+        <Select
+          value={selectedFusableId}
+          onChange={handleFusableIdChange}
+          options={fusableIdOptions}
+          styles={customStyles}
+          placeholder="Search or select a Fusable ID"
+          isClearable
+          isSearchable
+        />
+      </div>
+      <AnimatePresence>
+        {mergedRecords.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.5 }}
+            className="overflow-x-auto bg-white rounded-lg shadow-inner"
+          >
+            <table className="min-w-full divide-y divide-teal-200">
+              <thead className="bg-teal-600">
+                <tr>
+                  {['Source Name', 'Source Record Id', 'Name', 'Address', 'Secondary Name', 'Secondary Address'].map((header) => (
+                    <th key={header} className="px-6 py-3 text-left text-xs font-medium text-teal-50 uppercase tracking-wider">
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-teal-100">
+                {mergedRecords.map((record, index) => (
+                  <motion.tr
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    className="hover:bg-teal-50 transition-colors duration-150"
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-teal-800">{record.sourceName}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-teal-800">{record.sourceRecordId}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-teal-800">{record.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-teal-800">{record.address}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-teal-800">{record.secondaryName}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-teal-800">{record.secondaryAddress}</td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
+
 const dummyData = {
   totalRecordsProcessed: 4091837,
   masteredRecords: 646775,
@@ -342,101 +486,6 @@ const dummyDataCleaningMethods = [
   { name: 'Third-party Tools', efficiency: 90, timeSpent: 30 },
 ];
 
-const FusableRecordsMerger = () => {
-  const [selectedFusableId, setSelectedFusableId] = useState(null);
-  const fusableIdOptions = useMemo(() => 
-    Object.keys(dummyData).map(id => ({ value: id, label: id })),
-    []
-  );
-
-  const handleFusableIdChange = (selectedOption) => {
-    setSelectedFusableId(selectedOption);
-  };
-
-  const mergedRecords = selectedFusableId ? dummyData[selectedFusableId.value] : [];
-
-  const customStyles = {
-    control: (provided) => ({
-      ...provided,
-      borderColor: '#4DB6AC',
-      '&:hover': {
-        borderColor: '#26A69A',
-      },
-      boxShadow: 'none',
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      backgroundColor: state.isSelected ? '#00796B' : state.isFocused ? '#B2DFDB' : null,
-      color: state.isSelected ? 'white' : '#00796B',
-    }),
-    singleValue: (provided) => ({
-      ...provided,
-      color: '#00796B',
-    }),
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="bg-gradient-to-br from-teal-50 to-teal-100 p-6 rounded-lg shadow-lg border border-teal-200"
-    >
-      <h2 className="text-3xl font-bold text-teal-800 mb-6">Fusable Records Merger</h2>
-      <div className="mb-6 relative">
-        <Select
-          value={selectedFusableId}
-          onChange={handleFusableIdChange}
-          options={fusableIdOptions}
-          styles={customStyles}
-          placeholder="Search or select a Fusable ID"
-          isClearable
-          isSearchable
-        />
-      </div>
-      <AnimatePresence>
-        {mergedRecords.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.5 }}
-            className="overflow-x-auto bg-white rounded-lg shadow-inner"
-          >
-            <table className="min-w-full divide-y divide-teal-200">
-              <thead className="bg-teal-600">
-                <tr>
-                  {['Source Name', 'Source Record Id', 'Name', 'Address', 'Secondary Name', 'Secondary Address'].map((header) => (
-                    <th key={header} className="px-6 py-3 text-left text-xs font-medium text-teal-50 uppercase tracking-wider">
-                      {header}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-teal-100">
-                {mergedRecords.map((record, index) => (
-                  <motion.tr
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    className="hover:bg-teal-50 transition-colors duration-150"
-                  >
-                    {Object.values(record).map((value, cellIndex) => (
-                      <td key={cellIndex} className="px-6 py-4 whitespace-nowrap text-sm text-teal-800">
-                        {value}
-                      </td>
-                    ))}
-                  </motion.tr>
-                ))}
-              </tbody>
-            </table>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-};
 const formatDate = (dateString) => {
   return format(new Date(dateString), 'MMM dd, yyyy');
 };
@@ -1260,7 +1309,9 @@ const OverviewTab = ({ dateRange }) => (
     className="grid grid-cols-1 md:grid-cols-2 gap-8"
   >
     
-
+    <div className="col-span-2">
+      <FusableRecordsMerger />
+    </div>
     {/* Pipeline Processing Status */}
     <PipelineProcessingStatus />
 
