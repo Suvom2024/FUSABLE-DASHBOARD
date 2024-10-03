@@ -189,7 +189,7 @@ const dummyData = {
   masteredRecords: 646775,
   duplicatesRemoved: 1995725,
   averageClusterSize: 3.1,
-  maxClusterSize: 2997,
+  UniqueRecords: 2091175,
   sourceData: [
     { name: 'Carrier', totalRows: 173774, rowsProcessed: 173750, errorRows: 24, duplicatesFound: 172740 },
     { name: 'EDABuyer', totalRows: 353711, rowsProcessed: 353711, errorRows: 0, duplicatesFound: 143556 },
@@ -990,6 +990,12 @@ export default function Component() {
       description="Across all pipeline stages"
     />
     <KPICard
+      icon={<FaChartBar />}
+      title="Total Unique Records"
+      value={dummyData.UniqueRecords.toLocaleString()}
+      description="Total Unique Records"
+    />
+    <KPICard
       icon={<FaMagic />}
       title="Mastered Records"
       value={dummyData.masteredRecords.toLocaleString()}
@@ -1007,12 +1013,7 @@ export default function Component() {
       value={dummyData.averageClusterSize.toFixed(1)}
       description="Average number of records per cluster"
     />
-    <KPICard
-      icon={<FaChartBar />}
-      title="Max Cluster Size"
-      value={dummyData.maxClusterSize.toLocaleString()}
-      description="Largest cluster of records"
-    />
+    
       </div>
 
 
