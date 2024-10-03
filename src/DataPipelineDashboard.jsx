@@ -81,10 +81,17 @@ const dummyData = {
     { name: 'UCCDebtor', beforeRecords: 842678, afterRecords: 641235, dataQuality: 100 },
     { name: 'USDOT', beforeRecords: 464654, afterRecords: 464596, dataQuality: 99.99 },
   ],
-  qualityIssues: [
+  qualityIssues :  [
     { name: 'Invalid/Parsing Failure', count: 194 },
-    { name: 'Duplicates', count: 1995725 },
+    { name: 'Duplicates', count: 6725 },
+    { name: 'Missing Required Fields', count: 3562 },
+    { name: 'Out of Range Values', count: 2189 },
+    { name: 'Inconsistent Formatting', count: 5731 },
+    { name: 'Data Type Mismatch', count: 1847 },
+    { name: 'Invalid Date/Time', count: 983 },
+    { name: 'Unexpected Null Values', count: 4215 }
   ],
+  
   deduplicationData: [
     { name: 'Carrier', beforeRecords: 173750, afterRecords: 1010, duplicates: 172740 },
     { name: 'EDABuyer', beforeRecords: 353711, afterRecords: 210155, duplicates: 143556 },
@@ -1336,7 +1343,7 @@ const OverviewTab = ({ dateRange }) => (
 
     {/* Data Quality Issues Found */}
     <ChartCard 
-  title={<span className="text-2xl font-bold text-teal-800 mb-4">Data Quality Issues Found</span>} 
+  title={<span className="text-2xl font-bold text-teal-800 mb-4">Sample Data Quality Issues Found</span>} 
   className="ring-1 ring-teal-300"
 >
 <ResponsiveContainer width="100%" height={300}>
