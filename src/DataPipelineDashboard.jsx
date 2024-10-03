@@ -1343,7 +1343,7 @@ const OverviewTab = ({ dateRange }) => (
 
     {/* Data Quality Issues Found */}
     <ChartCard 
-  title={<span className="text-2xl font-bold text-teal-800 mb-4">Sample Data Quality Issues Found</span>} 
+  title={<span className="text-2xl font-bold text-teal-800 mb-4">Data Quality Issues Found (Sample Data)</span>} 
   className="ring-1 ring-teal-300"
 >
 <ResponsiveContainer width="100%" height={300}>
