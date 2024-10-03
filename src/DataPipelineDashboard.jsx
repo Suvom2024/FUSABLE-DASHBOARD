@@ -53,7 +53,7 @@ const dummyData = {
     { name: 'RigDig', totalRows: 483477, rowsProcessed: 483448, errorRows: 29, duplicatesFound: 473755 },
     { name: 'UCCSecuredParty', totalRows: 136066, rowsProcessed: 136066, errorRows: 0, duplicatesFound: 79703 },
     { name: 'USFarm', totalRows: 72694, rowsProcessed: 72693, errorRows: 1, duplicatesFound: 25936 },
-    { name: 'UCCDebtor', totalRows: 2406475, rowsProcessed: 2406394, errorRows: 81, duplicatesFound: 642890 },
+    { name: 'UCCDebtor', totalRows: 909394, rowsProcessed: 806394, errorRows: 81, duplicatesFound: 642890 },
     { name: 'USDOT', totalRows: 464654, rowsProcessed: 464596, errorRows: 58, duplicatesFound: 456813 },
   ],
   processingTimes: [
@@ -68,7 +68,7 @@ const dummyData = {
     { name: 'RigDig', records: 483477, size: 145043 },
     { name: 'UCCSecuredParty', records: 136066, size: 40820 },
     { name: 'USFarm', records: 72694, size: 21808 },
-    { name: 'UCCDebtor', records: 2406475, size: 721943 },
+    { name: 'UCCDebtor', records: 947521, size: 721943 },
     { name: 'USDOT', records: 464654, size: 139396 },
   ],
   cleaningData: [
@@ -78,7 +78,7 @@ const dummyData = {
     { name: 'RigDig', beforeRecords: 483477, afterRecords: 483448, dataQuality: 99.99 },
     { name: 'UCCSecuredParty', beforeRecords: 136066, afterRecords: 136066, dataQuality: 100 },
     { name: 'USFarm', beforeRecords: 72694, afterRecords: 72693, dataQuality: 100 },
-    { name: 'UCCDebtor', beforeRecords: 2406475, afterRecords: 2406394, dataQuality: 100 },
+    { name: 'UCCDebtor', beforeRecords: 842678, afterRecords: 641235, dataQuality: 100 },
     { name: 'USDOT', beforeRecords: 464654, afterRecords: 464596, dataQuality: 99.99 },
   ],
   qualityIssues: [
@@ -92,7 +92,7 @@ const dummyData = {
     { name: 'RigDig', beforeRecords: 483448, afterRecords: 9693, duplicates: 473755 },
     { name: 'UCCSecuredParty', beforeRecords: 136066, afterRecords: 56363, duplicates: 79703 },
     { name: 'USFarm', beforeRecords: 72693, afterRecords: 46757, duplicates: 25936 },
-    { name: 'UCCDebtor', beforeRecords: 2406394, afterRecords: 1763504, duplicates: 642890 },
+    { name: 'UCCDebtor', beforeRecords: 942786, afterRecords: 796125, duplicates: 642890 },
     { name: 'USDOT', beforeRecords: 464596, afterRecords: 7783, duplicates: 456813 },
   ],
   pipelineStageDistribution: [
@@ -1259,28 +1259,27 @@ const OverviewTab = ({ dateRange }) => (
 
     {/* Summary Statistics */}
     <Card className="bg-gradient-to-br from-teal-50 to-teal-100 border border-teal-200 overflow-hidden ring-1 ring-teal-300">
-      <div className="p-6 relative">
-        <h2 className="text-2xl font-bold text-teal-800 mb-4">Summary Statistics</h2>
-        <div className="space-y-4 relative z-10">
-          {[
-            { label: "Total Records Ingested", value: "1,500,000" },
-            { label: "Records After Cleaning", value: "1,450,000" },
-            { label: "Duplicates Removed", value: "50,000" },
-            { label: "Mastered Records Created", value: "1,400,000" },
-            { label: "Total Errors Encountered", value: "5,000", error: true }
-          ].map((item, index) => (
-            <div key={index} className="flex justify-between items-center p-2 rounded-lg bg-white bg-opacity-60 backdrop-blur-sm transition-all duration-300 hover:bg-opacity-80 hover:shadow-md">
-              <span className="text-teal-700">{item.label}</span>
-              <span className={`font-semibold ${item.error ? 'text-red-600' : 'text-teal-600'}`}>{item.value}</span>
-            </div>
-          ))}
+  <div className="p-6 relative">
+    <h2 className="text-2xl font-bold text-teal-800 mb-4">Summary Statistics</h2>
+    <div className="space-y-4 relative z-10">
+      {[
+        { label: "Total Records Processed", value: "4,091,837" },
+        { label: "Mastered Records", value: "646,775" },
+        { label: "Duplicates Removed", value: "1,995,725" },
+        { label: "Average Cluster Size", value: "3.1" },
+        { label: "Max Cluster Size", value: "2,997" },
+        { label: "Error/Invalid/Parsing Failure Rows", value: "194", error: true }
+      ].map((item, index) => (
+        <div key={index} className="flex justify-between items-center p-2 rounded-lg bg-white bg-opacity-60 backdrop-blur-sm transition-all duration-300 hover:bg-opacity-80 hover:shadow-md">
+          <span className="text-teal-700">{item.label}</span>
+          <span className={`font-semibold ${item.error ? 'text-red-600' : 'text-teal-600'}`}>{item.value}</span>
         </div>
-        <div className="absolute top-0 right-0 w-64 h-64 bg-teal-300 rounded-full filter blur-3xl opacity-20 -z-10"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-teal-400 rounded-full filter blur-3xl opacity-20 -z-10"></div>
-      </div>
-    </Card>
-
-
+      ))}
+    </div>
+    <div className="absolute top-0 right-0 w-64 h-64 bg-teal-300 rounded-full filter blur-3xl opacity-20 -z-10"></div>
+    <div className="absolute bottom-0 left-0 w-48 h-48 bg-teal-400 rounded-full filter blur-3xl opacity-20 -z-10"></div>
+  </div>
+</Card>
 
     {/* Records and File Size Distribution */}
     <div className="bg-white p-6 rounded-lg shadow-md border border-teal-200 ring-1 ring-teal-300">
