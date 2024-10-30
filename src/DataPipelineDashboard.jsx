@@ -100,7 +100,12 @@ const dummyDataQualityIssues = [
   { name: 'Out of Range', count: 300 },
   { name: 'Invalid References', count: 220 }
 ];
-
+const dataQualityIssueSeverity = [
+  { severity: 'Critical', count: 85, color: '#FF5252' },  // Red for critical
+  { severity: 'High', count: 150, color: '#FF9800' },     // Orange for high
+  { severity: 'Medium', count: 280, color: '#FFC107' },   // Yellow for medium
+  { severity: 'Low', count: 420, color: '#4CAF50' }       // Green for low
+];
 const dummyDataCleaning = [
   { name: 'Completeness', dataQuality: 75, completeness: 95 },
   { name: 'Accuracy', dataQuality: 82, completeness: 94 },
@@ -1753,22 +1758,48 @@ const DataCleaningTab = ({ dateRange }) => (
       </ResponsiveContainer>
     </ChartCard>
 
-    <ChartCard title="Data Quality Issue Severity">
-      <ResponsiveContainer width="100%" height={300}>
-        <ScatterChart>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="count" name="Issue Count" />
-          <YAxis dataKey="impact" name="Impact Score" />
-          <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
-          <Legend />
-          <Scatter name="Data Quality Issues" data={dummyDataQualityIssues} fill="#00796B">
-            {dummyDataQualityIssues.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.severity === 'High' ? '#F44336' : entry.severity === 'Medium' ? '#FFC107' : '#4CAF50'} />
-            ))}
-          </Scatter>
-        </ScatterChart>
-      </ResponsiveContainer>
-    </ChartCard>
+    <div className="bg-white p-4 rounded-lg shadow-md border border-teal-200">
+  <h2 className="text-xl font-semibold text-teal-800 mb-2">Data Quality Issue Severity</h2>
+  <ResponsiveContainer width="100%" height={300}>
+    <PieChart>
+      <Pie
+        data={dataQualityIssueSeverity}
+        dataKey="count"
+        nameKey="severity"
+        cx="50%"
+        cy="50%"
+        outerRadius={100}
+        label={({name, percent}) => `${name} ${(percent * 100).toFixed(0)}%`}
+      >
+        {dataQualityIssueSeverity.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={entry.color} />
+        ))}
+      </Pie>
+      <Tooltip
+        formatter={(value, name) => [`${value} issues`, `${name} Severity`]}
+        content={({ active, payload }) => {
+          if (active && payload && payload.length) {
+            return (
+              <div className="bg-white p-2 border border-gray-200 rounded shadow">
+                <p className="font-semibold">{payload[0].name} Severity</p>
+                <p className="text-sm">{`${payload[0].value} issues`}</p>
+                <p className="text-sm text-gray-600">
+                  {`${((payload[0].value / dataQualityIssueSeverity.reduce((acc, curr) => acc + curr.count, 0)) * 100).toFixed(1)}% of total`}
+                </p>
+              </div>
+            );
+          }
+          return null;
+        }}
+      />
+      <Legend 
+        layout="vertical" 
+        align="right"
+        verticalAlign="middle"
+      />
+    </PieChart>
+  </ResponsiveContainer>
+</div>
 
     <ChartCard title="Data Cleaning Impact">
       <ResponsiveContainer width="100%" height={300}>
