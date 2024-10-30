@@ -21,8 +21,7 @@ import { CheckIcon, MinusIcon } from 'lucide-react';
 import { AlertTriangle, TrendingUp, List } from 'lucide-react';
 import { Activity, RefreshCw } from 'lucide-react';
 import Select from 'react-select';
-
-// Color constants
+import { FaCog, FaCloudUploadAlt } from 'react-icons/fa';
 const COLORS = ['#00796B', '#26A69A', '#4DB6AC', '#80CBC4', '#B2DFDB', '#E0F2F1'];
 const ACCENT_COLORS = ['#FFC107', '#FF9800', '#FF5722', '#F44336', '#E91E63', '#9C27B0'];
 
@@ -39,6 +38,95 @@ const ACCENT_COLORS = ['#FFC107', '#FF9800', '#FF5722', '#F44336', '#E91E63', '#
 //     { sourceName: 'SourceC', sourceRecordId: 'C789', name: 'A Company', address: 'Main St, City A', secondaryName: '', secondaryAddress: '' },
 //   ],
 // };
+
+const dummyDataMasteredRecords = [
+  { date: '2024-01-01', records: 150000, confidence: 92, completeness: 88 },
+  { date: '2024-02-01', records: 180000, confidence: 93, completeness: 90 },
+  { date: '2024-03-01', records: 220000, confidence: 94, completeness: 91 },
+  { date: '2024-04-01', records: 280000, confidence: 95, completeness: 93 },
+  { date: '2024-05-01', records: 350000, confidence: 96, completeness: 94 },
+  { date: '2024-06-01', records: 420000, confidence: 97, completeness: 95 }
+];
+
+// For Data Ingestion Tab
+const dummyDataSourceDistribution = [
+  { name: 'Customer Data', value: 35, growth: 12, reliability: 95 },
+  { name: 'Transaction Data', value: 25, growth: 8, reliability: 98 },
+  { name: 'Product Data', value: 20, growth: -3, reliability: 92 },
+  { name: 'Vendor Data', value: 15, growth: 15, reliability: 90 },
+  { name: 'Location Data', value: 5, growth: 5, reliability: 94 }
+];
+
+const dummyDataIngestion = [
+  { size: 100, processingTime: 5, efficiency: 95 },
+  { size: 250, processingTime: 8, efficiency: 92 },
+  { size: 500, processingTime: 12, efficiency: 88 },
+  { size: 750, processingTime: 15, efficiency: 85 },
+  { size: 1000, processingTime: 20, efficiency: 82 }
+];
+
+const dummyDataQuality = [
+  { date: '2024-01-01', completeness: 85, accuracy: 90, consistency: 88 },
+  { date: '2024-02-01', completeness: 87, accuracy: 91, consistency: 89 },
+  { date: '2024-03-01', completeness: 90, accuracy: 93, consistency: 91 },
+  { date: '2024-04-01', completeness: 92, accuracy: 94, consistency: 92 },
+  { date: '2024-05-01', completeness: 94, accuracy: 95, consistency: 93 },
+  { date: '2024-06-01', completeness: 95, accuracy: 96, consistency: 94 }
+];
+
+const dummyDataProcessingTimes = [
+  { name: 'Data Validation', time: 12 },
+  { name: 'Data Cleaning', time: 25 },
+  { name: 'Data Transform', time: 18 },
+  { name: 'Data Loading', time: 15 },
+  { name: 'Quality Check', time: 10 }
+];
+
+// For Data Cleaning Tab
+const dummyDataErrorRates = [
+  { date: '2024-01-01', rate: 4.5, threshold: 5.0 },
+  { date: '2024-02-01', rate: 4.2, threshold: 5.0 },
+  { date: '2024-03-01', rate: 3.8, threshold: 5.0 },
+  { date: '2024-04-01', rate: 3.5, threshold: 5.0 },
+  { date: '2024-05-01', rate: 3.2, threshold: 5.0 },
+  { date: '2024-06-01', rate: 2.8, threshold: 5.0 }
+];
+
+const dummyDataQualityIssues = [
+  { name: 'Missing Values', count: 150 },
+  { name: 'Invalid Format', count: 280 },
+  { name: 'Duplicate Records', count: 420 },
+  { name: 'Inconsistent Data', count: 180 },
+  { name: 'Out of Range', count: 300 },
+  { name: 'Invalid References', count: 220 }
+];
+
+const dummyDataCleaning = [
+  { name: 'Completeness', dataQuality: 75, completeness: 95 },
+  { name: 'Accuracy', dataQuality: 82, completeness: 94 },
+  { name: 'Consistency', dataQuality: 78, completeness: 92 },
+  { name: 'Timeliness', dataQuality: 85, completeness: 96 },
+  { name: 'Validity', dataQuality: 80, completeness: 93 }
+];
+
+// For Performance Tab
+const dummyDataResourceUtilization = [
+  { time: '00:00', cpu: 45, memory: 60, io: 30, network: 25 },
+  { time: '04:00', cpu: 35, memory: 55, io: 25, network: 20 },
+  { time: '08:00', cpu: 65, memory: 70, io: 45, network: 40 },
+  { time: '12:00', cpu: 85, memory: 80, io: 60, network: 55 },
+  { time: '16:00', cpu: 75, memory: 75, io: 50, network: 45 },
+  { time: '20:00', cpu: 55, memory: 65, io: 35, network: 30 }
+];
+
+const queueLengthData = [
+  { time: '00:00', queueLength: 1200, processingSpeed: 350 },
+  { time: '04:00', queueLength: 800, processingSpeed: 400 },
+  { time: '08:00', queueLength: 2500, processingSpeed: 280 },
+  { time: '12:00', queueLength: 3800, processingSpeed: 250 },
+  { time: '16:00', queueLength: 2200, processingSpeed: 320 },
+  { time: '20:00', queueLength: 1500, processingSpeed: 380 }
+];
 
 const dummData = {
   '15011293834_197': [
@@ -260,20 +348,6 @@ const dummyDataPieChart = [
   { name: 'Category D', value: 100 },
 ];
 
-const dummyDataQuality = [
-  { name: 'Completeness', score: 85 },
-  { name: 'Accuracy', score: 90 },
-  { name: 'Consistency', score: 88 },
-  { name: 'Timeliness', score: 92 },
-];
-
-const dummyDataProcessingTimes = [
-  { stage: 'Ingestion', time: 120 },
-  { stage: 'Cleaning', time: 180 },
-  { stage: 'Transformation', time: 150 },
-  { stage: 'Loading', time: 90 },
-];
-
 const dummyDataErrorRate = [
   { date: '2023-06-01', rate: 2.5 },
   { date: '2023-06-02', rate: 2.2 },
@@ -296,7 +370,63 @@ const dummyDataCostSavings = [
   { month: 'Apr', savings: 8100 },
   { month: 'May', savings: 9000 },
 ];
+const deduplicationData = [
+  { name: 'Customer Records', before: 50000, after: 42500, reduction: 15 },
+  { name: 'Transaction Data', before: 100000, after: 89200, reduction: 10.8 },
+  { name: 'Product Catalog', before: 20000, after: 18600, reduction: 7 },
+  { name: 'Marketing List', before: 30000, after: 25800, reduction: 14 }
+];
 
+const deduplicationImpactData = [
+  { stage: 'Raw Data', size: 1250 },
+  { stage: 'After Validation', size: 1180 },
+  { stage: 'After Cleaning', size: 1050 },
+  { stage: 'After Deduplication', size: 785 },
+  { stage: 'Final Mastered', size: 750 }
+];
+
+const deduplicationTimeEfficiency = [
+  { batchSize: '10K', timeSeconds: 45, efficiency: 99.2 },
+  { batchSize: '50K', timeSeconds: 185, efficiency: 98.8 },
+  { batchSize: '100K', timeSeconds: 340, efficiency: 98.5 },
+  { batchSize: '500K', timeSeconds: 1250, efficiency: 97.8 },
+  { batchSize: '1M', timeSeconds: 2400, efficiency: 97.2 }
+];
+const dummyDataNewPlot = [
+  { name: 'Jan', value: 125000 },
+  { name: 'Feb', value: 148000 },
+  { name: 'Mar', value: 156000 },
+  { name: 'Apr', value: 172000 },
+  { name: 'May', value: 189000 },
+  { name: 'Jun', value: 195000 }
+];
+
+const dummyDataScatterPlot = [
+  { x: 100, y: 95, z: 120 },  // Record Count (k), Quality Score, Processing Time
+  { x: 150, y: 92, z: 180 },
+  { x: 200, y: 88, z: 240 },
+  { x: 250, y: 94, z: 300 },
+  { x: 300, y: 91, z: 360 },
+  { x: 350, y: 89, z: 420 },
+  { x: 400, y: 93, z: 480 }
+];
+
+const dummyDataLineChart = [
+  { month: 'Jan', growth: 15000 },
+  { month: 'Feb', growth: 23000 },
+  { month: 'Mar', growth: 28000 },
+  { month: 'Apr', growth: 32000 },
+  { month: 'May', growth: 45000 },
+  { month: 'Jun', growth: 52000 }
+];
+const deduplicationTrendData = [
+  { date: '2024-01', duplicateRate: 28.5, recordsProcessed: 980000 },
+  { date: '2024-02', duplicateRate: 25.2, recordsProcessed: 1120000 },
+  { date: '2024-03', duplicateRate: 22.8, recordsProcessed: 1350000 },
+  { date: '2024-04', duplicateRate: 19.5, recordsProcessed: 1580000 },
+  { date: '2024-05', duplicateRate: 17.2, recordsProcessed: 1750000 },
+  { date: '2024-06', duplicateRate: 15.8, recordsProcessed: 1920000 }
+];
 const dummyDataTimeEfficiency = [
   { process: 'Data Cleaning', before: 100, after: 70 },
   { process: 'Data Integration', before: 120, after: 90 },
@@ -304,31 +434,14 @@ const dummyDataTimeEfficiency = [
   { process: 'Report Generation', before: 60, after: 40 },
 ];
 
-const queueLengthData = [
-  { time: '00:00', length: 50 },
-  { time: '04:00', length: 30 },
-  { time: '08:00', length: 80 },
-  { time: '12:00', length: 100 },
-  { time: '16:00', length: 70 },
-  { time: '20:00', length: 40 },
+const performanceImprovementData = [
+  { metric: 'Processing Speed', improvement: 35, category: 'High' },
+  { metric: 'Memory Usage', improvement: -28, category: 'Medium' },
+  { metric: 'Accuracy Rate', improvement: 12, category: 'High' },
+  { metric: 'False Positives', improvement: -45, category: 'Critical' },
+  { metric: 'Throughput', improvement: 25, category: 'Medium' }
 ];
 
-const performanceImprovementData = [
-  { metric: 'Processing Speed', improvement: 30 },
-  { metric: 'Data Quality', improvement: 25 },
-  { metric: 'Error Rate', improvement: -40 },
-  { metric: 'Resource Utilization', improvement: 20 },
-];
-const dummyDataIngestion = [
-  { name: 'CustomerData.csv', records: 15000, size: 4500, processingTime: 180, errorRate: 0.02 },
-  { name: 'TransactionLog.json', records: 50000, size: 12000, processingTime: 420, errorRate: 0.01 },
-  { name: 'ProductCatalog.xml', records: 8000, size: 2800, processingTime: 150, errorRate: 0.03 },
-  { name: 'EmployeeRecords.xlsx', records: 5000, size: 1800, processingTime: 90, errorRate: 0.015 },
-  { name: 'SalesReport.csv', records: 30000, size: 7500, processingTime: 300, errorRate: 0.025 },
-  { name: 'InventoryUpdate.json', records: 20000, size: 5500, processingTime: 210, errorRate: 0.02 },
-  { name: 'CustomerFeedback.txt', records: 10000, size: 3000, processingTime: 120, errorRate: 0.04 },
-  { name: 'MarketingCampaign.csv', records: 12000, size: 3800, processingTime: 160, errorRate: 0.018 },
-];
 
 const dummyDataVolume = [
   { date: '2023-06-01', volume: 120000, forecast: 125000, anomaly: false },
@@ -340,14 +453,7 @@ const dummyDataVolume = [
   { date: '2023-06-07', volume: 140000, forecast: 132000, anomaly: true },
 ];
 
-const dummyDataSourceDistribution = [
-  { name: 'CRM System', value: 35000, growth: 8, reliability: 98 },
-  { name: 'E-commerce Platform', value: 28000, growth: 12, reliability: 96 },
-  { name: 'Mobile App', value: 22000, growth: 15, reliability: 94 },
-  { name: 'Social Media API', value: 18000, growth: 10, reliability: 92 },
-  { name: 'IoT Devices', value: 12000, growth: 20, reliability: 90 },
-  { name: 'Legacy Database', value: 8000, growth: -5, reliability: 85 },
-];
+
 
 const dummyDataDuplicates = [
   { source: 'CRM System', duplicates: 1500, percentage: 4.3, falsePositives: 75, detectionAccuracy: 98 },
@@ -371,15 +477,6 @@ const dummyDataDeduplication = [
   { name: 'Marketing Contacts', total: 30000, unique: 28800, duplicate: 12000 },
 ];
 
-const dummyDataMasteredRecords = [
-  { date: '2023-06-01', records: 95000, confidence: 92, completeness: 95, accuracy: 94 },
-  { date: '2023-06-02', records: 97000, confidence: 93, completeness: 96, accuracy: 95 },
-  { date: '2023-06-03', records: 99000, confidence: 94, completeness: 97, accuracy: 96 },
-  { date: '2023-06-04', records: 101000, confidence: 95, completeness: 97, accuracy: 97 },
-  { date: '2023-06-05', records: 103000, confidence: 96, completeness: 98, accuracy: 97 },
-  { date: '2023-06-06', records: 105000, confidence: 97, completeness: 98, accuracy: 98 },
-  { date: '2023-06-07', records: 107000, confidence: 98, completeness: 99, accuracy: 98 },
-];
 
 const dummyDataAttributeCompletion = [
   { name: 'Full Name', before: 95, after: 99.5, improvement: 4.5, criticality: 'High' },
@@ -416,14 +513,6 @@ const dummyDataThroughput = [
   { time: '20:00', throughput: 5500, capacity: 7500, queueLength: 750 },
 ];
 
-const dummyDataResourceUtilization = [
-  { time: '00:00', cpu: 60, memory: 70, io: 40, network: 50 },
-  { time: '04:00', cpu: 75, memory: 80, io: 55, network: 65 },
-  { time: '08:00', cpu: 70, memory: 75, io: 50, network: 60 },
-  { time: '12:00', cpu: 85, memory: 90, io: 70, network: 80 },
-  { time: '16:00', cpu: 80, memory: 85, io: 65, network: 75 },
-  { time: '20:00', cpu: 65, memory: 75, io: 45, network: 55 },
-];
 
 const dummyDataErrorCounts = [
   { type: 'Data Format Errors', count: 250, impact: 'Medium', resolutionTime: 45 },
@@ -455,28 +544,7 @@ const dummyDataFailedRecords = [
   { id: 8, recordId: 'SUPP0045678', errorMessage: 'Incomplete supplier information', stage: 'Data Mastering', timestamp: '2023-06-08 11:40:00', severity: 'Medium' },
 ];
 
-const dummyDataCleaning = [
-  { name: 'Customer Dataset', records: 50000, dataQuality: 88 },
-  { name: 'Product Catalog', records: 20000, dataQuality: 92 },
-  { name: 'Sales Transactions', records: 100000, dataQuality: 85 },
-  { name: 'Employee Records', records: 5000, dataQuality: 90 },
-];
 
-const dummyDataQualityIssues = [
-  { name: 'Missing Values', count: 2500, impact: 8, severity: 'High', resolutionTime: 4.5 },
-  { name: 'Duplicate Records', count: 1200, impact: 6, severity: 'Medium', resolutionTime: 2.5 },
-  { name: 'Inconsistent Formats', count: 1800, impact: 7, severity: 'High', resolutionTime: 5 },
-  { name: 'Data Type Mismatches', count: 800, impact: 5, severity: 'Low', resolutionTime: 1.5 },
-  { name: 'Out-of-Range Values', count: 1500, impact: 7, severity: 'Medium', resolutionTime: 3 },
-];
-
-const dummyDataErrorRates = [
-  { date: '2023-06-01', rate: 3.2, threshold: 2, criticalErrors: 18, warningErrors: 42 },
-  { date: '2023-06-02', rate: 2.8, threshold: 2, criticalErrors: 15, warningErrors: 38 },
-  { date: '2023-06-03', rate: 2.5, threshold: 2, criticalErrors: 12, warningErrors: 35 },
-  { date: '2023-06-04', rate: 2.2, threshold: 2, criticalErrors: 10, warningErrors: 32 },
-  { date: '2023-06-05', rate: 1.9, threshold: 2, criticalErrors: 8, warningErrors: 28 },
-];
 
 const dummyDataCleaningMethods = [
   { name: 'Manual Review', efficiency: 85, timeSpent: 40 },
@@ -731,12 +799,12 @@ const TabItem = ({ icon: Icon, label, isActive, onClick }) => (
 const DataPipelineTabs = ({ activeTab, setActiveTab }) => {
   const tabs = [
     { label: 'Overview', icon: FaChartBar },
-    // { label: 'Data Ingestion', icon: FaCloudUploadAlt },
-    // { label: 'Data Cleaning', icon: FaFilter },
-    // { label: 'Deduplication', icon: FaCopy },
-    // { label: 'Data Mastering', icon: FaClipboardCheck },
-    // { label: 'Performance', icon: FaChartLine },
-    // { label: 'Errors', icon: FaExclamationTriangle },
+    { label: 'Data Ingestion', icon: FaCloudUploadAlt },
+    { label: 'Data Cleaning', icon: FaFilter },
+    { label: 'Deduplication', icon: FaCopy },
+    { label: 'Data Mastering', icon: FaClipboardCheck },
+    { label: 'Performance', icon: FaChartLine },
+    { label: 'Errors', icon: FaExclamationTriangle },
   ];
 
   return (
@@ -781,52 +849,7 @@ const Footer = () => {
   );
 };
 
-const MovingDots = () => {
-  const canvasRef = useRef(null);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const particles = [];
-    const particleCount = 50;
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 2 + 1,
-        speedX: Math.random() * 0.5 - 0.25,
-        speedY: Math.random() * 0.5 - 0.25
-      });
-    }
-
-    const animate = () => {
-      requestAnimationFrame(animate);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach(particle => {
-        particle.x += particle.speedX;
-        particle.y += particle.speedY;
-
-        if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
-
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(20, 184, 166, 0.5)'; // Teal color with transparency
-        ctx.fill();
-      });
-    };
-
-    animate();
-
-    return () => cancelAnimationFrame(animate);
-  }, []);
-  return <canvas ref={canvasRef} className="absolute inset-0 z-0" />;
-};
 // Main Dashboard component
 export default function Component() {
   const [activeTab, setActiveTab] = useState(0);
@@ -842,7 +865,7 @@ export default function Component() {
       <DateRangeSelect />
 
       {/* KPI Cards */}
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
         <KPICard
           icon={<FaDatabase />}
           title="Total Records Processed"
@@ -981,8 +1004,8 @@ export default function Component() {
           trendValue="5%"
           color="red"
         />
-      </div> */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      </div>
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
       <KPICard
       icon={<FaDatabase />}
       title="Total Records Processed"
@@ -1014,7 +1037,7 @@ export default function Component() {
       description="Average number of records per cluster"
     />
     
-      </div>
+      </div> */}
 
 
       {/* Tabs for different sections */}
@@ -1031,7 +1054,7 @@ export default function Component() {
             <TabPanel>
               <OverviewTab dateRange={dateRange} />
             </TabPanel>
-            {/* <TabPanel>
+            <TabPanel>
               <DataIngestionTab dateRange={dateRange} />
             </TabPanel>
             <TabPanel>
@@ -1048,7 +1071,7 @@ export default function Component() {
             </TabPanel>
             <TabPanel>
               <ErrorsTab dateRange={dateRange} />
-            </TabPanel> */}
+            </TabPanel>
           </motion.div>
         </AnimatePresence>
       </Tabs>
@@ -1135,391 +1158,391 @@ const Progress = ({ value, className, indicatorClassName }) => (
     ></div>
   </div>
 );
-// const OverviewTab = ({ dateRange }) => (
-//   <motion.div
-//     initial={{ opacity: 0 }}
-//     animate={{ opacity: 1 }}
-//     transition={{ duration: 0.5 }}
-//     className="grid grid-cols-1 md:grid-cols-3 gap-8"
-//   >
-//     {/* Pipeline Processing Status */}
-//     <PipelineProcessingStatus />
-
-//     {/* Summary Statistics */}
-//     <Card className="bg-gradient-to-br from-teal-50 to-teal-100 border border-teal-200 overflow-hidden">
-//       <div className="p-6 relative">
-//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Summary Statistics</h2>
-//         <div className="space-y-4 relative z-10">
-//           {[
-//             { label: "Total Records Ingested", value: "1,500,000" },
-//             { label: "Records After Cleaning", value: "1,450,000" },
-//             { label: "Duplicates Removed", value: "50,000" },
-//             { label: "Mastered Records Created", value: "1,400,000" },
-//             { label: "Total Errors Encountered", value: "5,000", error: true }
-//           ].map((item, index) => (
-//             <div key={index} className="flex justify-between items-center p-2 rounded-lg bg-white bg-opacity-60 backdrop-blur-sm transition-all duration-300 hover:bg-opacity-80 hover:shadow-md">
-//               <span className="text-teal-700">{item.label}</span>
-//               <span className={`font-semibold ${item.error ? 'text-red-600' : 'text-teal-600'}`}>{item.value}</span>
-//             </div>
-//           ))}
-//         </div>
-//         <div className="absolute top-0 right-0 w-64 h-64 bg-teal-300 rounded-full filter blur-3xl opacity-20 -z-10"></div>
-//         <div className="absolute bottom-0 left-0 w-48 h-48 bg-teal-400 rounded-full filter blur-3xl opacity-20 -z-10"></div>
-//       </div>
-//     </Card>
-
-//     {/* Processing Time by Stage */}
-//     <Card className="border border-teal-200">
-//       <div className="p-6">
-//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Processing Time by Stage</h2>
-//         <ResponsiveContainer width="100%" height={300}>
-//           <BarChart data={dummyDataProcessingTime}>
-//             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-//             <XAxis dataKey="stage" tick={{ fill: '#4a5568', fontWeight: '500' }} />
-//             <YAxis tick={{ fill: '#4a5568', fontWeight: '500' }} />
-//             <Tooltip content={<CustomTooltip />} />
-//             <Legend />
-//             <Bar dataKey="time" name="Current Time" fill="#38b2ac" />
-//           </BarChart>
-//         </ResponsiveContainer>
-//       </div>
-//     </Card>
-
-//     {/* Data Quality Improvement */}
-//     <Card className="border border-teal-200">
-//       <div className="p-6">
-//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Data Quality Improvement</h2>
-//         <ResponsiveContainer width="100%" height={300}>
-//           <RadarChart outerRadius={90} data={dummyDataQualityImprovement}>
-//             <PolarGrid stroke="#CBD5E0" />
-//             <PolarAngleAxis dataKey="attribute" tick={{ fill: '#4a5568', fontWeight: '500' }} />
-//             <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fill: '#4a5568', fontWeight: '500' }} />
-//             <Radar name="Before" dataKey="before" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
-//             <Radar name="After" dataKey="after" stroke="#4fd1c5" fill="#4fd1c5" fillOpacity={0.6} />
-//             <Legend />
-//             <Tooltip content={<CustomTooltip />} />
-//           </RadarChart>
-//         </ResponsiveContainer>
-//       </div>
-//     </Card>
-
-//     {/* Overall Pipeline Performance */}
-//     <Card className="border border-teal-200">
-//       <div className="p-6">
-//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Overall Pipeline Performance</h2>
-//         <ResponsiveContainer width="100%" height={300}>
-//           <ComposedChart data={dummyDataMasteredRecords}>
-//             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-//             <XAxis dataKey="date" tickFormatter={(value) => new Date(value).toLocaleDateString()} tick={{ fill: '#4a5568', fontWeight: '500' }} />
-//             <YAxis yAxisId="left" orientation="left" stroke="#38b2ac" tick={{ fill: '#4a5568', fontWeight: '500' }} />
-//             <YAxis yAxisId="right" orientation="right" stroke="#4fd1c5" tick={{ fill: '#4a5568', fontWeight: '500' }} />
-//             <Tooltip content={<CustomTooltip />} />
-//             <Legend />
-//             <Bar yAxisId="left" dataKey="records" name="Mastered Records" fill="#38b2ac" />
-//             <Line yAxisId="right" type="monotone" dataKey="confidence" name="Confidence (%)" stroke="#4fd1c5" />
-//             <Area yAxisId="right" type="monotone" dataKey="completeness" name="Completeness (%)" fill="#81e6d9" stroke="#4fd1c5" />
-//           </ComposedChart>
-//         </ResponsiveContainer>
-//       </div>
-//     </Card>
-
-//     {/* Records Growth Over Time */}
-//     <Card className="border border-teal-200">
-//       <div className="p-6">
-//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Records Growth Over Time</h2>
-//         <ResponsiveContainer width="100%" height={300}>
-//           <BarChart data={dummyDataNewPlot}>
-//             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-//             <XAxis dataKey="name" tick={{ fill: '#4a5568', fontWeight: '500' }} />
-//             <YAxis tick={{ fill: '#4a5568', fontWeight: '500' }} />
-//             <Tooltip content={<CustomTooltip />} />
-//             <Legend />
-//             <Bar dataKey="value" name="Records" fill="#38b2ac" />
-//           </BarChart>
-//         </ResponsiveContainer>
-//       </div>
-//     </Card>
-// <Card className="border border-teal-200">
-//       <div className="p-6">
-//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Pipeline Stage Distribution</h2>
-//         <ResponsiveContainer width="100%" height={300}>
-//           <PieChart>
-//             <Pie
-//               data={dummyDataPieChart}
-//               cx="50%"
-//               cy="50%"
-//               innerRadius={60}
-//               outerRadius={100}
-//               fill="#8884d8"
-//               paddingAngle={5}
-//               dataKey="value"
-//             >
-//               {dummyDataPieChart.map((entry, index) => (
-//                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-//               ))}
-//             </Pie>
-//             <Tooltip content={<CustomTooltip />} />
-//             <Legend />
-//           </PieChart>
-//         </ResponsiveContainer>
-//       </div>
-//     </Card>
-
-//     {/* Data Quality vs. Record Count */}
-//     <Card className="border border-teal-200">
-//       <div className="p-6">
-//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Data Quality vs. Record Count</h2>
-//         <ResponsiveContainer width="100%" height={300}>
-//           <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-//             <CartesianGrid />
-//             <XAxis type="number" dataKey="x" name="Record Count" unit="k" />
-//             <YAxis type="number" dataKey="y" name="Quality Score" unit="" />
-//             <ZAxis type="number" dataKey="x" range={[60, 400]} name="Processing Time" unit="s" />
-//             <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
-//             <Scatter name="Data Quality" data={dummyDataScatterPlot} fill="#38b2ac" />
-//           </ScatterChart>
-//         </ResponsiveContainer>
-//       </div>
-//     </Card>
-
-//     {/* Monthly Growth Trend */}
-//     <Card className="border border-teal-200">
-//       <div className="p-6">
-//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Monthly Growth Trend</h2>
-//         <ResponsiveContainer width="100%" height={300}>
-//           <LineChart data={dummyDataLineChart} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-//             <CartesianGrid strokeDasharray="3 3" />
-//             <XAxis dataKey="month" />
-//             <YAxis />
-//             <Tooltip content={<CustomTooltip />} />
-//             <Legend />
-//             <Line type="monotone" dataKey="growth" stroke="#38b2ac" strokeWidth={2} />
-//           </LineChart>
-//         </ResponsiveContainer>
-//       </div>
-//     </Card>
-//   </motion.div>
-
-// );
-
 const OverviewTab = ({ dateRange }) => (
   <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 0.5 }}
-    className="grid grid-cols-1 md:grid-cols-2 gap-8"
+    className="grid grid-cols-1 md:grid-cols-3 gap-8"
   >
-    
-    <div className="col-span-2">
-      <FusableRecordsMerger />
-    </div>
     {/* Pipeline Processing Status */}
     <PipelineProcessingStatus />
 
     {/* Summary Statistics */}
-    <Card className="bg-gradient-to-br from-teal-50 to-teal-100 border border-teal-200 overflow-hidden ring-1 ring-teal-300">
-  <div className="p-6 relative">
-    <h2 className="text-2xl font-bold text-teal-800 mb-4">Summary Statistics</h2>
-    <div className="space-y-4 relative z-10">
-      {[
-        { label: "Total Records Processed", value: "4,091,837" },
-        { label: "Mastered Records", value: "646,775" },
-        { label: "Duplicates Removed", value: "1,995,725" },
-        { label: "Average Cluster Size", value: "3.1" },
-        { label: "Max Cluster Size", value: "2,997" },
-        { label: "Error/Invalid/Parsing Failure Rows", value: "194", error: true }
-      ].map((item, index) => (
-        <div key={index} className="flex justify-between items-center p-2 rounded-lg bg-white bg-opacity-60 backdrop-blur-sm transition-all duration-300 hover:bg-opacity-80 hover:shadow-md">
-          <span className="text-teal-700">{item.label}</span>
-          <span className={`font-semibold ${item.error ? 'text-red-600' : 'text-teal-600'}`}>{item.value}</span>
+    <Card className="bg-gradient-to-br from-teal-50 to-teal-100 border border-teal-200 overflow-hidden">
+      <div className="p-6 relative">
+        <h2 className="text-2xl font-bold text-teal-800 mb-4">Summary Statistics</h2>
+        <div className="space-y-4 relative z-10">
+          {[
+            { label: "Total Records Ingested", value: "1,500,000" },
+            { label: "Records After Cleaning", value: "1,450,000" },
+            { label: "Duplicates Removed", value: "50,000" },
+            { label: "Mastered Records Created", value: "1,400,000" },
+            { label: "Total Errors Encountered", value: "5,000", error: true }
+          ].map((item, index) => (
+            <div key={index} className="flex justify-between items-center p-2 rounded-lg bg-white bg-opacity-60 backdrop-blur-sm transition-all duration-300 hover:bg-opacity-80 hover:shadow-md">
+              <span className="text-teal-700">{item.label}</span>
+              <span className={`font-semibold ${item.error ? 'text-red-600' : 'text-teal-600'}`}>{item.value}</span>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-    <div className="absolute top-0 right-0 w-64 h-64 bg-teal-300 rounded-full filter blur-3xl opacity-20 -z-10"></div>
-    <div className="absolute bottom-0 left-0 w-48 h-48 bg-teal-400 rounded-full filter blur-3xl opacity-20 -z-10"></div>
-  </div>
-</Card>
-
-    {/* Records and File Size Distribution */}
-    <div className="bg-white p-6 rounded-lg shadow-md border border-teal-200 ring-1 ring-teal-300">
-      <h2 className="text-2xl font-bold text-teal-800 mb-4">Records and File Size Distribution</h2>
-      <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={dummyData.ingestionData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
-        <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-        <Bar yAxisId="left" dataKey="records" name="Records" fill="#00796B" />
-        <Bar yAxisId="right" dataKey="size" name="File Size (KB)" fill="#FFC107" />
-      </BarChart>
-    </ResponsiveContainer>
-    </div>
-
-    {/* Data Source Distribution */}
-    <Card className="border border-teal-200 ring-1 ring-teal-300">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-teal-800 mb-4">Data Source Distribution</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={dummyData.sourceData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <Bar dataKey="totalRows" name="Total Rows" fill="#00796B" />
-            <Bar dataKey="duplicatesFound" name="Duplicates Found" fill="#FFC107" />
-          </BarChart>
-        </ResponsiveContainer>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-teal-300 rounded-full filter blur-3xl opacity-20 -z-10"></div>
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-teal-400 rounded-full filter blur-3xl opacity-20 -z-10"></div>
       </div>
     </Card>
 
-    {/* Records Before and After Cleaning */}
-    <ChartCard   title={<span className="text-2xl font-bold text-teal-800 mb-4">Records Before and After Cleaning</span>} 
- className="ring-1 ring-teal-300">
-      <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={dummyData.cleaningData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
-        <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-        <Bar yAxisId="left" dataKey="beforeRecords" name="Before Cleaning" fill="#00796B" />
-        <Bar yAxisId="left" dataKey="afterRecords" name="After Cleaning" fill="#4DB6AC" />
-        <Line yAxisId="right" type="monotone" dataKey="dataQuality" name="Data Quality (%)" stroke="#FFC107" />
-      </BarChart>
-    </ResponsiveContainer>
-    </ChartCard>
-
-    {/* Data Quality Issues Found */}
-    <ChartCard 
-  title={<span className="text-2xl font-bold text-teal-800 mb-4">Data Quality Issues Found (Sample Data)</span>} 
-  className="ring-1 ring-teal-300"
->
-<ResponsiveContainer width="100%" height={300}>
-      <BarChart data={dummyData.qualityIssues} layout="vertical">
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis type="number" />
-        <YAxis dataKey="name" type="category" width={150} />
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-        <Bar dataKey="count" name="Issue Count" fill="#00796B" />
-      </BarChart>
-    </ResponsiveContainer>
-    </ChartCard>
-
-
-    {/* Number of Duplicates Found */}
-    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300">
-    <h2 className="text-2xl font-bold text-teal-800 mb-4">Number of Duplicates Found</h2>
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={dummyData.deduplicationData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-        <Bar dataKey="duplicates" name="Duplicates" fill="#00796B" />
-        <Bar dataKey="afterRecords" name="Unique Records" fill="#4DB6AC" />
-      </BarChart>
-    </ResponsiveContainer>
-    </div>
-
-
-    {/* Records Before and After Deduplication */}
-    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300"> 
-    <h2 className="text-2xl font-bold text-teal-800 mb-4">Records Before and After Deduplication</h2> 
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={dummyData.deduplicationData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-        <Bar dataKey="beforeRecords" name="Before Deduplication" fill="#00796B" />
-        <Bar dataKey="afterRecords" name="After Deduplication" fill="#4DB6AC" />
-      </BarChart>
-    </ResponsiveContainer>
-      </div>
     {/* Processing Time by Stage */}
-    <Card className="border border-teal-200 ring-1 ring-teal-300">
+    <Card className="border border-teal-200">
       <div className="p-6">
         <h2 className="text-2xl font-bold text-teal-800 mb-4">Processing Time by Stage</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={dummyData.processingTimes}>
+          <BarChart data={dummyDataProcessingTime}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
             <XAxis dataKey="stage" tick={{ fill: '#4a5568', fontWeight: '500' }} />
-            <YAxis 
-              tick={{ fill: '#4a5568', fontWeight: '500' }} 
-              label={{ value: 'Time (minutes)', angle: -90, position: 'insideLeft' }}
-            />
-            <Tooltip 
-              content={({ payload, label }) => {
-                if (payload && payload.length) {
-                  const time = payload[0].value;
-                  const hours = Math.floor(time / 60);
-                  const minutes = time % 60;
-                  return (
-                    <div className="bg-white p-2 border border-gray-300 rounded shadow">
-                      <p className="font-bold">{label}</p>
-                      <p>{`${hours}h ${minutes}m`}</p>
-                    </div>
-                  );
-                }
-                return null;
-              }}
-            />
+            <YAxis tick={{ fill: '#4a5568', fontWeight: '500' }} />
+            <Tooltip content={<CustomTooltip />} />
             <Legend />
-            <Bar dataKey="time" name="Processing Time" fill="#38b2ac" />
+            <Bar dataKey="time" name="Current Time" fill="#38b2ac" />
           </BarChart>
         </ResponsiveContainer>
       </div>
     </Card>
 
-    {/* Pipeline Stage Distribution */}
-    <Card className="border border-teal-200 ring-1 ring-teal-300">
+    {/* Data Quality Improvement */}
+    <Card className="border border-teal-200">
       <div className="p-6">
-        <h2 className="text-2xl font-bold text-teal-800 mb-4">Pipeline Stage Distribution</h2>
-        <ResponsiveContainer width="100%" height={350}>
-      <PieChart>
-        <Pie
-          data={dummyData.pipelineStageDistribution}
-          cx="50%"
-          cy="50%"
-          labelLine={false}
-          outerRadius={150}
-          fill="#8884d8"
-          dataKey="time"
-          label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-        >
-          {dummyData.pipelineStageDistribution.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-      </PieChart>
-    </ResponsiveContainer>
+        <h2 className="text-2xl font-bold text-teal-800 mb-4">Data Quality Improvement</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <RadarChart outerRadius={90} data={dummyDataQualityImprovement}>
+            <PolarGrid stroke="#CBD5E0" />
+            <PolarAngleAxis dataKey="attribute" tick={{ fill: '#4a5568', fontWeight: '500' }} />
+            <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fill: '#4a5568', fontWeight: '500' }} />
+            <Radar name="Before" dataKey="before" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+            <Radar name="After" dataKey="after" stroke="#4fd1c5" fill="#4fd1c5" fillOpacity={0.6} />
+            <Legend />
+            <Tooltip content={<CustomTooltip />} />
+          </RadarChart>
+        </ResponsiveContainer>
       </div>
     </Card>
-    {/* Error Counts by Type */}
-    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-red-300 ring-1 ring-teal-300 col-span-2">
-      <h2 className="text-3xl font-semibold text-red-800 mb-6">Error Trends Over Time</h2>
-      <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={dummyData.sourceData}>
+
+    {/* Overall Pipeline Performance */}
+    <Card className="border border-teal-200">
+      <div className="p-6">
+        <h2 className="text-2xl font-bold text-teal-800 mb-4">Overall Pipeline Performance</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <ComposedChart data={dummyDataMasteredRecords}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+            <XAxis dataKey="date" tickFormatter={(value) => new Date(value).toLocaleDateString()} tick={{ fill: '#4a5568', fontWeight: '500' }} />
+            <YAxis yAxisId="left" orientation="left" stroke="#38b2ac" tick={{ fill: '#4a5568', fontWeight: '500' }} />
+            <YAxis yAxisId="right" orientation="right" stroke="#4fd1c5" tick={{ fill: '#4a5568', fontWeight: '500' }} />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend />
+            <Bar yAxisId="left" dataKey="records" name="Mastered Records" fill="#38b2ac" />
+            <Line yAxisId="right" type="monotone" dataKey="confidence" name="Confidence (%)" stroke="#4fd1c5" />
+            <Area yAxisId="right" type="monotone" dataKey="completeness" name="Completeness (%)" fill="#81e6d9" stroke="#4fd1c5" />
+          </ComposedChart>
+        </ResponsiveContainer>
+      </div>
+    </Card>
+
+    {/* Records Growth Over Time */}
+    <Card className="border border-teal-200">
+      <div className="p-6">
+        <h2 className="text-2xl font-bold text-teal-800 mb-4">Records Growth Over Time</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={dummyDataNewPlot}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+            <XAxis dataKey="name" tick={{ fill: '#4a5568', fontWeight: '500' }} />
+            <YAxis tick={{ fill: '#4a5568', fontWeight: '500' }} />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend />
+            <Bar dataKey="value" name="Records" fill="#38b2ac" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </Card>
+<Card className="border border-teal-200">
+      <div className="p-6">
+        <h2 className="text-2xl font-bold text-teal-800 mb-4">Pipeline Stage Distribution</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie
+              data={dummyDataPieChart}
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={100}
+              fill="#8884d8"
+              paddingAngle={5}
+              dataKey="value"
+            >
+              {dummyDataPieChart.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip content={<CustomTooltip />} />
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    </Card>
+
+    {/* Data Quality vs. Record Count */}
+    <Card className="border border-teal-200">
+      <div className="p-6">
+        <h2 className="text-2xl font-bold text-teal-800 mb-4">Data Quality vs. Record Count</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+            <CartesianGrid />
+            <XAxis type="number" dataKey="x" name="Record Count" unit="k" />
+            <YAxis type="number" dataKey="y" name="Quality Score" unit="" />
+            <ZAxis type="number" dataKey="x" range={[60, 400]} name="Processing Time" unit="s" />
+            <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
+            <Scatter name="Data Quality" data={dummyDataScatterPlot} fill="#38b2ac" />
+          </ScatterChart>
+        </ResponsiveContainer>
+      </div>
+    </Card>
+
+    {/* Monthly Growth Trend */}
+    <Card className="border border-teal-200">
+      <div className="p-6">
+        <h2 className="text-2xl font-bold text-teal-800 mb-4">Monthly Growth Trend</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={dummyDataLineChart} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis dataKey="month" />
             <YAxis />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
-            <Bar dataKey="errorRows" name="Error Rows" fill="#F44336" />
-          </BarChart>
+            <Line type="monotone" dataKey="growth" stroke="#38b2ac" strokeWidth={2} />
+          </LineChart>
         </ResponsiveContainer>
-    </div>
+      </div>
+    </Card>
   </motion.div>
+
 );
+
+// const OverviewTab = ({ dateRange }) => (
+//   <motion.div
+//     initial={{ opacity: 0 }}
+//     animate={{ opacity: 1 }}
+//     transition={{ duration: 0.5 }}
+//     className="grid grid-cols-1 md:grid-cols-2 gap-8"
+//   >
+    
+//     <div className="col-span-2">
+//       <FusableRecordsMerger />
+//     </div>
+//     {/* Pipeline Processing Status */}
+//     <PipelineProcessingStatus />
+
+//     {/* Summary Statistics */}
+//     <Card className="bg-gradient-to-br from-teal-50 to-teal-100 border border-teal-200 overflow-hidden ring-1 ring-teal-300">
+//   <div className="p-6 relative">
+//     <h2 className="text-2xl font-bold text-teal-800 mb-4">Summary Statistics</h2>
+//     <div className="space-y-4 relative z-10">
+//       {[
+//         { label: "Total Records Processed", value: "4,091,837" },
+//         { label: "Mastered Records", value: "646,775" },
+//         { label: "Duplicates Removed", value: "1,995,725" },
+//         { label: "Average Cluster Size", value: "3.1" },
+//         { label: "Max Cluster Size", value: "2,997" },
+//         { label: "Error/Invalid/Parsing Failure Rows", value: "194", error: true }
+//       ].map((item, index) => (
+//         <div key={index} className="flex justify-between items-center p-2 rounded-lg bg-white bg-opacity-60 backdrop-blur-sm transition-all duration-300 hover:bg-opacity-80 hover:shadow-md">
+//           <span className="text-teal-700">{item.label}</span>
+//           <span className={`font-semibold ${item.error ? 'text-red-600' : 'text-teal-600'}`}>{item.value}</span>
+//         </div>
+//       ))}
+//     </div>
+//     <div className="absolute top-0 right-0 w-64 h-64 bg-teal-300 rounded-full filter blur-3xl opacity-20 -z-10"></div>
+//     <div className="absolute bottom-0 left-0 w-48 h-48 bg-teal-400 rounded-full filter blur-3xl opacity-20 -z-10"></div>
+//   </div>
+// </Card>
+
+//     {/* Records and File Size Distribution */}
+//     <div className="bg-white p-6 rounded-lg shadow-md border border-teal-200 ring-1 ring-teal-300">
+//       <h2 className="text-2xl font-bold text-teal-800 mb-4">Records and File Size Distribution</h2>
+//       <ResponsiveContainer width="100%" height={300}>
+//       <BarChart data={dummyData.ingestionData}>
+//         <CartesianGrid strokeDasharray="3 3" />
+//         <XAxis dataKey="name" />
+//         <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
+//         <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
+//         <Tooltip content={<CustomTooltip />} />
+//         <Legend />
+//         <Bar yAxisId="left" dataKey="records" name="Records" fill="#00796B" />
+//         <Bar yAxisId="right" dataKey="size" name="File Size (KB)" fill="#FFC107" />
+//       </BarChart>
+//     </ResponsiveContainer>
+//     </div>
+
+//     {/* Data Source Distribution */}
+//     <Card className="border border-teal-200 ring-1 ring-teal-300">
+//       <div className="p-6">
+//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Data Source Distribution</h2>
+//         <ResponsiveContainer width="100%" height={300}>
+//           <BarChart data={dummyData.sourceData}>
+//             <CartesianGrid strokeDasharray="3 3" />
+//             <XAxis dataKey="name" />
+//             <YAxis />
+//             <Tooltip content={<CustomTooltip />} />
+//             <Legend />
+//             <Bar dataKey="totalRows" name="Total Rows" fill="#00796B" />
+//             <Bar dataKey="duplicatesFound" name="Duplicates Found" fill="#FFC107" />
+//           </BarChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </Card>
+
+//     {/* Records Before and After Cleaning */}
+//     <ChartCard   title={<span className="text-2xl font-bold text-teal-800 mb-4">Records Before and After Cleaning</span>} 
+//  className="ring-1 ring-teal-300">
+//       <ResponsiveContainer width="100%" height={300}>
+//       <BarChart data={dummyData.cleaningData}>
+//         <CartesianGrid strokeDasharray="3 3" />
+//         <XAxis dataKey="name" />
+//         <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
+//         <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
+//         <Tooltip content={<CustomTooltip />} />
+//         <Legend />
+//         <Bar yAxisId="left" dataKey="beforeRecords" name="Before Cleaning" fill="#00796B" />
+//         <Bar yAxisId="left" dataKey="afterRecords" name="After Cleaning" fill="#4DB6AC" />
+//         <Line yAxisId="right" type="monotone" dataKey="dataQuality" name="Data Quality (%)" stroke="#FFC107" />
+//       </BarChart>
+//     </ResponsiveContainer>
+//     </ChartCard>
+
+//     {/* Data Quality Issues Found */}
+//     <ChartCard 
+//   title={<span className="text-2xl font-bold text-teal-800 mb-4">Data Quality Issues Found (Sample Data)</span>} 
+//   className="ring-1 ring-teal-300"
+// >
+// <ResponsiveContainer width="100%" height={300}>
+//       <BarChart data={dummyData.qualityIssues} layout="vertical">
+//         <CartesianGrid strokeDasharray="3 3" />
+//         <XAxis type="number" />
+//         <YAxis dataKey="name" type="category" width={150} />
+//         <Tooltip content={<CustomTooltip />} />
+//         <Legend />
+//         <Bar dataKey="count" name="Issue Count" fill="#00796B" />
+//       </BarChart>
+//     </ResponsiveContainer>
+//     </ChartCard>
+
+
+//     {/* Number of Duplicates Found */}
+//     <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300">
+//     <h2 className="text-2xl font-bold text-teal-800 mb-4">Number of Duplicates Found</h2>
+//     <ResponsiveContainer width="100%" height={400}>
+//       <BarChart data={dummyData.deduplicationData}>
+//         <CartesianGrid strokeDasharray="3 3" />
+//         <XAxis dataKey="name" />
+//         <YAxis />
+//         <Tooltip content={<CustomTooltip />} />
+//         <Legend />
+//         <Bar dataKey="duplicates" name="Duplicates" fill="#00796B" />
+//         <Bar dataKey="afterRecords" name="Unique Records" fill="#4DB6AC" />
+//       </BarChart>
+//     </ResponsiveContainer>
+//     </div>
+
+
+//     {/* Records Before and After Deduplication */}
+//     <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-teal-200 ring-1 ring-teal-300"> 
+//     <h2 className="text-2xl font-bold text-teal-800 mb-4">Records Before and After Deduplication</h2> 
+//     <ResponsiveContainer width="100%" height={400}>
+//       <BarChart data={dummyData.deduplicationData}>
+//         <CartesianGrid strokeDasharray="3 3" />
+//         <XAxis dataKey="name" />
+//         <YAxis />
+//         <Tooltip content={<CustomTooltip />} />
+//         <Legend />
+//         <Bar dataKey="beforeRecords" name="Before Deduplication" fill="#00796B" />
+//         <Bar dataKey="afterRecords" name="After Deduplication" fill="#4DB6AC" />
+//       </BarChart>
+//     </ResponsiveContainer>
+//       </div>
+//     {/* Processing Time by Stage */}
+//     <Card className="border border-teal-200 ring-1 ring-teal-300">
+//       <div className="p-6">
+//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Processing Time by Stage</h2>
+//         <ResponsiveContainer width="100%" height={300}>
+//           <BarChart data={dummyData.processingTimes}>
+//             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+//             <XAxis dataKey="stage" tick={{ fill: '#4a5568', fontWeight: '500' }} />
+//             <YAxis 
+//               tick={{ fill: '#4a5568', fontWeight: '500' }} 
+//               label={{ value: 'Time (minutes)', angle: -90, position: 'insideLeft' }}
+//             />
+//             <Tooltip 
+//               content={({ payload, label }) => {
+//                 if (payload && payload.length) {
+//                   const time = payload[0].value;
+//                   const hours = Math.floor(time / 60);
+//                   const minutes = time % 60;
+//                   return (
+//                     <div className="bg-white p-2 border border-gray-300 rounded shadow">
+//                       <p className="font-bold">{label}</p>
+//                       <p>{`${hours}h ${minutes}m`}</p>
+//                     </div>
+//                   );
+//                 }
+//                 return null;
+//               }}
+//             />
+//             <Legend />
+//             <Bar dataKey="time" name="Processing Time" fill="#38b2ac" />
+//           </BarChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </Card>
+
+//     {/* Pipeline Stage Distribution */}
+//     <Card className="border border-teal-200 ring-1 ring-teal-300">
+//       <div className="p-6">
+//         <h2 className="text-2xl font-bold text-teal-800 mb-4">Pipeline Stage Distribution</h2>
+//         <ResponsiveContainer width="100%" height={350}>
+//       <PieChart>
+//         <Pie
+//           data={dummyData.pipelineStageDistribution}
+//           cx="50%"
+//           cy="50%"
+//           labelLine={false}
+//           outerRadius={150}
+//           fill="#8884d8"
+//           dataKey="time"
+//           label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+//         >
+//           {dummyData.pipelineStageDistribution.map((entry, index) => (
+//             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+//           ))}
+//         </Pie>
+//         <Tooltip content={<CustomTooltip />} />
+//         <Legend />
+//       </PieChart>
+//     </ResponsiveContainer>
+//       </div>
+//     </Card>
+//     {/* Error Counts by Type */}
+//     <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-red-300 ring-1 ring-teal-300 col-span-2">
+//       <h2 className="text-3xl font-semibold text-red-800 mb-6">Error Trends Over Time</h2>
+//       <ResponsiveContainer width="100%" height={300}>
+//           <BarChart data={dummyData.sourceData}>
+//             <CartesianGrid strokeDasharray="3 3" />
+//             <XAxis dataKey="name" />
+//             <YAxis />
+//             <Tooltip content={<CustomTooltip />} />
+//             <Legend />
+//             <Bar dataKey="errorRows" name="Error Rows" fill="#F44336" />
+//           </BarChart>
+//         </ResponsiveContainer>
+//     </div>
+//   </motion.div>
+// );
 
 // Data Ingestion Tab
 const DataIngestionTab = ({ dateRange }) => (
@@ -1679,21 +1702,42 @@ const DataCleaningTab = ({ dateRange }) => (
     </ChartCard>
 
     <ChartCard title="Data Quality Issues Found">
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={dummyDataQualityIssues} layout="vertical">
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" />
-          <YAxis dataKey="name" type="category" width={150} />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-          <Bar dataKey="count" name="Issue Count" fill="#00796B">
-            {dummyDataQualityIssues.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
-    </ChartCard>
+  <ResponsiveContainer width="100%" height={300}>
+    <BarChart 
+      data={dummyDataQualityIssues} 
+      layout="vertical"
+      margin={{ top: 5, right: 30, left: 20, bottom: 5 }} // Reduced left margin
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis 
+        type="number" 
+        domain={[0, 600]} // Set explicit domain to match screenshot
+        tickCount={7} // Control number of ticks
+      />
+      <YAxis 
+        dataKey="name" 
+        type="category" 
+        width={100} // Reduced width
+        axisLine={false} // Remove axis line
+        tickLine={false} // Remove tick lines
+      />
+      <Tooltip content={<CustomTooltip />} />
+      <Bar 
+        dataKey="count" 
+        name="Issue Count" 
+        barSize={20} // Control bar height
+      >
+        {dummyDataQualityIssues.map((entry, index) => (
+          <Cell 
+            key={`cell-${index}`} 
+            fill={COLORS[index % COLORS.length]} 
+          />
+        ))}
+      </Bar>
+    </BarChart>
+  </ResponsiveContainer>
+</ChartCard>
+
 
     <ChartCard title="Error Rates Over Time">
       <ResponsiveContainer width="100%" height={300}>
@@ -1853,17 +1897,18 @@ const DeduplicationTab = ({ dateRange }) => (
 
     <ChartCard title="Records Before and After Deduplication">
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={dummyDataDeduplication}>
+        <BarChart data={deduplicationData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip />
           <Legend />
-          <Bar dataKey="records" name="Total Records" fill="#00796B" />
-          <Bar dataKey="uniqueRecords" name="Unique Records" fill="#4DB6AC" />
+          <Bar dataKey="before" name="Before" fill="#00796B" />
+          <Bar dataKey="after" name="After" fill="#4DB6AC" />
         </BarChart>
       </ResponsiveContainer>
     </ChartCard>
+
 
     <ChartCard title="Deduplication Efficiency">
       <ResponsiveContainer width="100%" height={300}>
@@ -1884,13 +1929,20 @@ const DeduplicationTab = ({ dateRange }) => (
 
     <ChartCard title="Deduplication Impact on Data Size">
       <ResponsiveContainer width="100%" height={300}>
-        <AreaChart data={dummyDataDeduplication}>
+        <AreaChart data={deduplicationImpactData}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey="stage" />
           <YAxis />
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip />
           <Legend />
-          <Area type="monotone" dataKey="dataSizeGB" name="Data Size (GB)" stroke="#00796B" fill="#00796B" fillOpacity={0.3} />
+          <Area 
+            type="monotone" 
+            dataKey="size" 
+            name="Data Size (GB)" 
+            stroke="#00796B" 
+            fill="#00796B" 
+            fillOpacity={0.3} 
+          />
         </AreaChart>
       </ResponsiveContainer>
     </ChartCard>
@@ -1927,30 +1979,51 @@ const DeduplicationTab = ({ dateRange }) => (
       <ResponsiveContainer width="100%" height={300}>
         <ScatterChart>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="timeSeconds" name="Time (seconds)" />
-          <YAxis dataKey="efficiencyPercentage" name="Efficiency (%)" />
-          <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
+          <XAxis 
+            dataKey="timeSeconds" 
+            name="Processing Time (seconds)" 
+            type="number" 
+          />
+          <YAxis 
+            dataKey="efficiency" 
+            name="Efficiency (%)" 
+            type="number" 
+            domain={[95, 100]} 
+          />
+          <Tooltip cursor={{ strokeDasharray: '3 3' }} />
           <Legend />
-          <Scatter name="Deduplication Methods" data={dummyDataTimeEfficiency} fill="#00796B">
-            {dummyDataTimeEfficiency.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Scatter>
+          <Scatter 
+            name="Batch Processing" 
+            data={deduplicationTimeEfficiency} 
+            fill="#00796B" 
+          />
         </ScatterChart>
       </ResponsiveContainer>
     </ChartCard>
 
     <ChartCard title="Deduplication Trend Over Time">
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={dummyDataDeduplication}>
+        <ComposedChart data={deduplicationTrendData}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip content={<CustomTooltip />} />
+          <XAxis dataKey="date" />
+          <YAxis yAxisId="left" orientation="left" stroke="#00796B" />
+          <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
+          <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="records" name="Total Records" stroke="#00796B" />
-          <Line type="monotone" dataKey="uniqueRecords" name="Unique Records" stroke="#4DB6AC" />
-        </LineChart>
+          <Bar 
+            yAxisId="left" 
+            dataKey="recordsProcessed" 
+            name="Records Processed" 
+            fill="#00796B" 
+          />
+          <Line 
+            yAxisId="right" 
+            type="monotone" 
+            dataKey="duplicateRate" 
+            name="Duplicate Rate (%)" 
+            stroke="#FFC107" 
+          />
+        </ComposedChart>
       </ResponsiveContainer>
     </ChartCard>
   </div>
@@ -2235,20 +2308,59 @@ const PerformanceTab = ({ dateRange }) => (
     </div>
 
     <div className="bg-white p-4 rounded-lg shadow-md border border-teal-200">
-      <h2 className="text-xl font-semibold text-teal-800 mb-2">Performance Improvement Breakdown</h2>
-      <ResponsiveContainer width="100%" height={250}>
-        <BarChart data={performanceImprovementData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-          <Bar dataKey="optimization" name="Optimization" stackId="a" fill="#8884d8" />
-          <Bar dataKey="bugFixes" name="Bug Fixes" stackId="a" fill="#82ca9d" />
-          <Bar dataKey="newFeatures" name="New Features" stackId="a" fill="#ffc658" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+  <h2 className="text-xl font-semibold text-teal-800 mb-2">Performance Improvement Breakdown</h2>
+  <ResponsiveContainer width="100%" height={250}>
+    <LineChart 
+      data={performanceImprovementData}
+      margin={{ top: 10, right: 30, left: 20, bottom: 30 }}
+    >
+      <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
+      <XAxis 
+        dataKey="metric" 
+        angle={-45}
+        textAnchor="end"
+        height={60}
+      />
+      <YAxis 
+        tickFormatter={(value) => `${value}%`}
+        domain={[-50, 50]}
+      />
+      <Tooltip
+        content={({ active, payload, label }) => {
+          if (active && payload && payload.length) {
+            return (
+              <div className="bg-white p-2 border border-gray-200 rounded shadow">
+                <p className="font-semibold">{label}</p>
+                <p className={`text-sm ${payload[0].value > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {`Improvement: ${payload[0].value}%`}
+                </p>
+              </div>
+            );
+          }
+          return null;
+        }}
+      />
+      <Line 
+        type="monotone" 
+        dataKey="improvement" 
+        stroke="#00796B" 
+        strokeWidth={2}
+        dot={{ 
+          fill: '#00796B',
+          stroke: '#00796B',
+          strokeWidth: 2,
+          r: 6 
+        }}
+        activeDot={{ 
+          fill: '#00796B',
+          stroke: '#fff',
+          strokeWidth: 2,
+          r: 8 
+        }}
+      />
+    </LineChart>
+  </ResponsiveContainer>
+</div>
 
     <div className="bg-white p-4 rounded-lg shadow-md border border-teal-200">
       <h2 className="text-xl font-semibold text-teal-800 mb-2">Performance Metrics Breakdown</h2>
